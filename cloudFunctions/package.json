@@ -1,0 +1,25 @@
+{
+  "name": "story-raw-data-gcs-trigger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/storage": "latest",
+    "@google-cloud/text-to-speech": "latest",
+    "async": "^3.1.0",
+    "chunk-text": "^1.0.5",
+    "ffmpeg-static": "^2.7.0",
+    "ffprobe-static": "^3.0.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "redis": "^2.8.0",
+    "redis-smq": "^1.1.6",
+    "request": "latest",
+    "rimraf": "^3.0.0",
+    "uuid": "^3.3.3"
+  }
+}
