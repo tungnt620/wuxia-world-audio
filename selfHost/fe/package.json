@@ -10,15 +10,9 @@
     "lru-cache": "^5.1.1",
     "query-string": "^6.5.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
-  },
-  "scripts": {
-    "dev": "ENV=development node server.js",
-    "build": "ENV=production next build",
-    "build:dev": "ENV=development next build",
-    "start": "NODE_ENV=production node server.js"
-  },
-  "devDependencies": {
+    "react-dom": "^16.8.6",
+
+
     "null-loader": "2.0.0",
     "express": "^4.17.1",
     "next": "^9.0.3",
@@ -45,5 +39,13 @@
     "dotenv": "^8.0.0",
     "node-sass": "^4.12.0",
     "styled-jsx-plugin-sass": "^1.0.0"
+  },
+  "scripts": {
+    "dev": "NODE_ENV=development node server.js",
+    "build": "NODE_ENV=production next build",
+    "build:dev": "NODE_ENV=development next build",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "devDependencies": {
   }
 }

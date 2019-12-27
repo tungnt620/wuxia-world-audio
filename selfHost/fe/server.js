@@ -6,7 +6,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-// TODO: Our's cache will remove when have new deploy
+// NOTE: Our's cache will remove when have new deploy
 
 // This is where we cache our rendered HTML pages
 const ssrCache = new LRUCache({
@@ -23,17 +23,17 @@ app.prepare()
     // For robots.txt, sitemap.xml file
     server.use(express.static('static/rootFiles'))
 
-    server.get('/the-loai/:slug/', (req, res) => {
-      return renderAndCache(req, res, '/cat', { slug: req.params.slug })
-    })
-
     server.get('/', (req, res) => {
       return renderAndCache(req, res, '/home')
     })
 
-    server.get('/:slug/', (req, res) => {
-      return renderAndCache(req, res, '/story', { slug: req.params.slug })
-    })
+    // server.get('/the-loai/:slug/', (req, res) => {
+    //   return renderAndCache(req, res, '/cat', { slug: req.params.slug })
+    // })
+    //
+    // server.get('/:slug/', (req, res) => {
+    //   return renderAndCache(req, res, '/story', { slug: req.params.slug })
+    // })
 
     server.get('*', (req, res) => {
       return handle(req, res)
@@ -68,6 +68,7 @@ async function renderAndCache (req, res, path, query) {
     }
 
     res.send(html)
+    return
   }
 
   const key = getCacheKey(req)

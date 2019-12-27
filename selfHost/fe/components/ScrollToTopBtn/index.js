@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import styles from './styles'
 import debounce from 'lodash.debounce'
 
@@ -45,7 +44,5 @@ const ScrollToTopBtn = () => {
       : null
   )
 }
-
-ScrollToTopBtn.propTypes = {}
 
 export default ScrollToTopBtn

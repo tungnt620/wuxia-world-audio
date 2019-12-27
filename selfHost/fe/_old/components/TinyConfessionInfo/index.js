@@ -4,7 +4,7 @@ import styles from './styles'
 import Link from 'next/link'
 import { humanFormatFromTimestamp } from '../../../shared/dateUtils'
 import defaultProfileImage from 'static/images/name.png'
-import commentsImage from '../../../public/images/comments.png'
+import commentsImage from '../../../assets/images/comments.png'
 
 const TinyConfessionInfo = ({ confession, index }) => {
   let { image, slug, title, created_at, totalComment, author } = confession

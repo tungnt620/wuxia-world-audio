@@ -18,11 +18,10 @@
 - Use plugin ```babel-plugin-import``` and config in ```.babelrc``` file
 
 ## Run
-- Start in local dev
+- Start development
 ```bash
-node server.js
+yarn dev
 ```
-
 
 ## Deploy
 - Install pm2:

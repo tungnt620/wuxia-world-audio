@@ -6,7 +6,7 @@ const optimizedImages = require('next-optimized-images')
 const fonts = require('next-fonts')
 const size = require('next-size')
 const withPlugins = require('next-compose-plugins')
-const env = process.env.ENV
+const env = process.env.NODE_ENV
 const pathPrefix = ''
 const environment = {
   development: {

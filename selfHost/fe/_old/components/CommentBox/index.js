@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './styles'
 import { humanFormatFromTimestamp } from '../../../shared/dateUtils'
-import defaultProfileImage from '../../../public/images/name.png'
+import defaultProfileImage from '../../../assets/images/name.png'
 
 const CommentBox = ({ id, author, author_name, content, created_at, parent }) => {
 

@@ -1,5 +1,3 @@
-import { Head } from 'next/document'
-
 export default {
   title: ' Nơi chia sẻ những tâm sự thầm kín',
   titleTemplate: '%s | Confession',
