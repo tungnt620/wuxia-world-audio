@@ -40,3 +40,7 @@ export const dataURItoBlob = (dataURI) => {
 
   return new Blob([ab], { type: mimeString })
 }
+
+export const isDev = () => {
+  return process.env.NODE_ENV === 'development'
+}

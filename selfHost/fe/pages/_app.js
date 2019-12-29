@@ -4,7 +4,7 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import withApolloClient from '../shared/graphQL/withApolloClient'
 import { DefaultSeo } from 'next-seo'
 // have bug, if haven't this import, page will be can't goto link after a time page un interact
-import './empty.css'
+import './global.scss'
 
 import defaultSEOPropsConfigs from '../shared/nextSEODefaultConfig'
 

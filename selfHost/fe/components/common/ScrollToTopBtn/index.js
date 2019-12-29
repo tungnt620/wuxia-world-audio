@@ -4,6 +4,14 @@ import debounce from 'lodash.debounce'
 
 const ScrollToTopBtn = () => {
   const [isShow, setIsShow] = useState(false)
+
+  useEffect(() => {
+    window.addEventListener('scroll', scrollFuncDebounced)
+    return () => {
+      window.removeEventListener('scroll', scrollFuncDebounced)
+    }
+  }, [])
+
   const scrollToTop = () => {
     window.scroll({
       top: 0,
@@ -23,26 +31,17 @@ const ScrollToTopBtn = () => {
   }
   const scrollFuncDebounced = debounce(scrollFunc, 200)
 
-  useEffect(() => {
-    window.addEventListener('scroll', scrollFuncDebounced)
-    return () => {
-      window.removeEventListener('scroll', scrollFuncDebounced)
-    }
-  }, [])
+  if (isShow) return (
+    <div onClick={scrollToTop} className="ant-back-top">
+      <div className="ant-back-top-content">
+        <div className="ant-back-top-icon"/>
+      </div>
 
-  return (
-    isShow ?
-      (
-        <div onClick={scrollToTop} className="ant-back-top">
-          <div className="ant-back-top-content">
-            <div className="ant-back-top-icon"/>
-          </div>
-
-          <style jsx>{styles}</style>
-        </div>
-      )
-      : null
+      <style jsx>{styles}</style>
+    </div>
   )
+
+  return null
 }
 
 export default ScrollToTopBtn

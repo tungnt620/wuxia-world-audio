@@ -5,7 +5,7 @@ import ScrollToTopBtn from '../../ScrollToTopBtn'
 const MainLayout = ({ children }) => {
 
   return (
-    <div className={'wrap-all-container'}>
+    <div className={'container'}>
       {children}
 
       <ScrollToTopBtn/>
