@@ -5,13 +5,13 @@ import ScrollToTopBtn from '../../ScrollToTopBtn'
 const MainLayout = ({ children }) => {
 
   return (
-    <div className={'container'}>
+    <main className={'container'}>
       {children}
 
       <ScrollToTopBtn/>
 
       <style jsx>{styles}</style>
-    </div>
+    </main>
   )
 }
 

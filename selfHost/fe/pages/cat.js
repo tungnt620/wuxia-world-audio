@@ -4,16 +4,17 @@ import Header from '../components/common/Header'
 import Head from 'next/head'
 import Footer from '../components/common/Footer'
 import Home from '../components/Home'
+import Cat from '../components/Cat'
 
 export default () => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Cat</title>
       </Head>
       <Header/>
       <MainLayout>
-        <Home />
+        <Cat/>
       </MainLayout>
       <Footer/>
     </>

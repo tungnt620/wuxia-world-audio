@@ -3,17 +3,17 @@ import MainLayout from '../components/common/Layout/Main'
 import Header from '../components/common/Header'
 import Head from 'next/head'
 import Footer from '../components/common/Footer'
-import Home from '../components/Home'
+import BookDetail from '../components/BookDetail'
 
 export default () => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Book detail</title>
       </Head>
       <Header/>
       <MainLayout>
-        <Home />
+        <BookDetail/>
       </MainLayout>
       <Footer/>
     </>

@@ -7,7 +7,7 @@ const Header = () => {
   const [mobileShow, setMobileShow] = useState(false)
 
   return (
-    <header className={'header'}>
+    <header className={'header container'}>
       <nav className="navbar is-light">
         <div className="navbar-brand">
           <a className="navbar-item logo" href="/">

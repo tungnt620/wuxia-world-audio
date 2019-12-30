@@ -2,8 +2,9 @@ import css from 'styled-jsx/css'
 
 /*language=SCSS*/
 export default css`
-  .container {
-    margin-top: 20px;
-    margin-bottom: 100px;
+  .home {
+    @media (max-width: 769px) {
+      padding: 0 10px;
+    }
   }
 `
