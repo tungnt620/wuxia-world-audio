@@ -18,7 +18,10 @@ client/_examples
 *-debug.log
 fabfile.py
 fabfile.pyc
+dataDir
 .db
 myAudio.db
 .db-journal
 myAudio.db-journal
+myAudio.db-shm
+myAudio.db-wal

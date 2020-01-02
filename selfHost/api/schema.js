@@ -2,6 +2,7 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
     type Query {
+        book(slug: String): Book
         books(
             offset: Int
             limit: Int
@@ -16,7 +17,6 @@ const typeDefs = gql`
             limit: Int
             q: String
         ): [Book]!
-        book(slug: String): Book
         cat(slug: String): Cat 
         cats(
             offset: Int

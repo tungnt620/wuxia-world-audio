@@ -2,10 +2,10 @@
   "sql-file": true,
   "dev": {
     "driver": "sqlite3",
-    "filename": "./dataSources/myAudio.db"
+    "filename": "./dataDir/myAudio.db"
   },
   "prod": {
     "driver": "sqlite3",
-    "filename": "./dataSources/myAudio.db"
+    "filename": "./dataDir/myAudio.db"
   }
 }
