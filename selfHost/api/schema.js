@@ -2,59 +2,59 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
     type Query {
-        confessions(
+        books(
             offset: Int
             limit: Int
-            categoryID: Int
-            categorySlug: String
+            catSlug: String
             """
             orderBy include direction ( - for DESC if not will ASC) and field name; Current not support
             """
             orderBy: String
-        ): [Confession]!
-        searchConfession(
+        ): [Book]!
+        searchBook(
             offset: Int
             limit: Int
             q: String
-        ): [Confession]!
-        confession(id: Int, slug: String): Confession
-        category(slug: String): Category
-        categories(
+        ): [Book]!
+        book(slug: String): Book
+        cat(slug: String): Cat 
+        cats(
             offset: Int
             limit: Int
-        ): [Category]!
+        ): [Cat]!
     }
 
-    type Confession {
-        id: Int
-        title: String
-        content: String
-        created_at: Int
-        slug: String
-        image: String
-        totalComment: Int
-        totalLike: Int
-        categories: [Category]
-        comments: [Comment]
-        relativeConfessions: [Confession]
-        relativeCategories: [Category]
-    }
-    type Category {
+    type Book {
         id: Int
         name: String
         slug: String
-        image: String
-        totalConfession: Int
-        confessions: [Confession]
-    }
-    type Comment {
-        id: Int
-        confession_id: Int
-        author_name: String
-        author: String
-        content: String
+        desc: String
+        img: String
         created_at: Int
-        parent: Int
+        updated_at: Int
+        cats: [Cat]
+        authors: [Author]
+        relativeBooks: [Book]
+        relativeCats: [Cat]
+    }
+    type Cat {
+        id: Int
+        name: String
+        slug: String
+        desc: String
+        img: String
+        created_at: Int
+        updated_at: Int
+        books: [Book]
+    }
+    type Author {
+        id: Int
+        name: String
+        slug: String
+        desc: String
+        img: String
+        created_at: Int
+        updated_at: Int
     }
 `
 

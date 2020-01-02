@@ -3,14 +3,10 @@
 2. We have v1 written in Wordpress so we have a script for migrate data from v1 to v2
 3. We use pm2 for deploy and run in production
 
-### Migrate database from v1 to v2
-1. Migrate data
-```bash
-cd _migrations && node initDbToSqlite.js
-```
-2. Keep current upload file like ```https://confession.vn/wp-content/uploads/2018/01/neuconfessions.jpg``` 
-   May we still keep this folder and have custom nginx rule
-   Current upload file just work on 1 server, it not store on dedicate static server 
+### Database
+- Migrate:
+    - Install: ```yarn global add db-migrate```, ``` yarn global add db-migrate-sqlite3```
+    - Create db: ```db-migrate db:create myAudio```
 
 ### Development
 ```bash

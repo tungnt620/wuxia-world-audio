@@ -1,19 +1,16 @@
 const { ApolloServer } = require("apollo-server")
 const typeDefs = require("./schema")
 const resolvers = require("./resolvers")
-const Sentry = require('@sentry/node');
-
-Sentry.init({ dsn: 'https://4ab8bd544fdd430c83292d54e81c0409@sentry.io/1457228' });
 
 // Initial database
 const Database = require('better-sqlite3')
 const db = new Database(process.env.DB_URL)
 
 // set up any dataSources our resolvers need
-const Confession = require('./datasources/confession');
-const confessionDatasource = new Confession(db)
+const MyAudio = require('./dataSources/confession');
+const myAudioDataSource = new MyAudio(db)
 const dataSources = () => ({
-  confession: confessionDatasource,
+  confession: myAudioDataSource,
 });
 
 // the function that sets up the global context for each resolver, using the req
