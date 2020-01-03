@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "redis-smq": "^1.1.6"
+    "redis-smq": "^1.1.6",
+    "better-sqlite3": "^5.4.0"
   }
 }

@@ -2,7 +2,7 @@
 // const { Message, Producer } = require('redis-smq');
 
 const config = {
-  namespace: 'story-tts',
+  namespace: 'book-tts',
   redis: {
     driver: 'redis',
     options: {

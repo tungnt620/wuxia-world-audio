@@ -2,7 +2,7 @@
 commit;
 
 begin transaction;
-CREATE TABLE IF NOT EXISTS  "author" (
+CREATE TABLE IF NOT EXISTS "book" (
 	"id"	integer primary key autoincrement,
 	"name"	text not null,
 	"slug"	text not null unique,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS  "author" (
 commit;
 
 begin transaction;
-CREATE TABLE IF NOT EXISTS "book" (
+CREATE TABLE IF NOT EXISTS  "author" (
 	"id"	integer primary key autoincrement,
 	"name"	text not null,
 	"slug"	text not null unique,

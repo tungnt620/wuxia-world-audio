@@ -1,20 +1,10 @@
+const { REDIS_SMQ_BOOK_TTS_QUEUE } = require('./share/constants')
+
 require('dotenv').config()
+const config = require('./helpers/redisSMQConfig')
 
 const redisSMQ = require('redis-smq')
 const Consumer = redisSMQ.Consumer
-
-const config = {
-  namespace: 'story-tts',
-  redis: {
-    driver: 'redis',
-    options: {
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
-      password: process.env.REDIS_PASSWORD,
-      connect_timeout: 3600000,
-    },
-  },
-}
 
 class SaveDataToDBConsumer extends Consumer {
   /**
@@ -29,8 +19,6 @@ class SaveDataToDBConsumer extends Consumer {
   }
 }
 
-SaveDataToDBConsumer.queueName = 'story-tts'
-
+SaveDataToDBConsumer.queueName = REDIS_SMQ_BOOK_TTS_QUEUE
 const consumer = new SaveDataToDBConsumer(config)
-console.log(consumer)
 consumer.run()
