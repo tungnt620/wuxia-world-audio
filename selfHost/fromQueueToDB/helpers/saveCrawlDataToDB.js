@@ -15,8 +15,8 @@ const a = {
 
 function saveCrawlDataToDB (rawData) {
   const db = require('../share/db')
-
 }
+
 // What if insert error ?
 // current we just throw error and program will terminate
 // not sure but i think pm2 will auto restart our's app
