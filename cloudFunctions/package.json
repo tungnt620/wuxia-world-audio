@@ -20,6 +20,7 @@
     "redis-smq": "^1.1.6",
     "request": "latest",
     "rimraf": "^3.0.0",
+    "sleep-promise": "^8.0.1",
     "uuid": "^3.3.3"
   }
 }

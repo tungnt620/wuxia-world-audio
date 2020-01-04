@@ -14,8 +14,10 @@ const ffmpegStatic = require('ffmpeg-static')
 const ffprobeStatic = require('ffprobe-static')
 const rmrf = require('rimraf')
 
+const isCloud = process.env.ENV === 'cloud'
+
 // process.env.ENV we set in deploy command
-const workingDir = process.env.ENV === 'cloud' ? path.join(os.tmpdir(), 'MP3') : 'MP3'
+const workingDir = isCloud ? path.join(os.tmpdir(), 'MP3') : 'MP3'
 const gcpBucketName = 'story-chapter-audio'
 const storage = new Storage()
 const ttsClient = new TextToSpeech.TextToSpeechClient()
@@ -44,11 +46,11 @@ const fromTextToAudio = (textContent, callbackOnError, callbackOnSuccess) => {
                   if (err) {
                     callbackOnError('Failed to concatinate audio files.\n' + err)
                   } else {
-                    createGcsObject(singleFilePath, (err, metadata) => {
+                    createGcsObject(singleFilePath, (err, fileName) => {
                       if (err) {
                         callbackOnError('Could not send audio to GCS.\n' + err)
                       } else {
-                        callbackOnSuccess('File successfully sent to GCS', metadata['metadata']['mediaLink'])
+                        callbackOnSuccess('File successfully sent to GCS', fileName)
                       }
                     })
                   }
@@ -103,27 +105,20 @@ function concatAudioFiles (filePaths, cb) {
 // Used to send concatinated audio file to Google Cloud Storage
 function createGcsObject (audioPath, cb) {
   const hash = crypto.createHash('md5').update(uuidv4()).digest('hex')
+  const fileName =  hash + '.mp3'
 
   const objectOptions = {
-    destination: hash + '.mp3',
+    destination: fileName,
     public: true,
     metadata: {
       contentType: 'audio/mpeg',
-      metadata: {
-        // title: articleData.title,
-        // author: articleData.author,
-        // excerpt: articleData.excerpt,
-        // url: articleData.url,
-        // datePublished: articleData.date_published,
-        // leadImageUrl: articleData.lead_image_url
-      }
     }
   }
 
   storage
     .bucket(gcpBucketName)
     .upload(audioPath, objectOptions, (err, metadata, apiResponse) => {
-      if (err) { cb(err, null) } else { cb(null, metadata) }
+      if (err) { cb(err, null) } else { cb(null, fileName) }
     })
 }
 

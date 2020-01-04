@@ -9,10 +9,10 @@ export GOOGLE_APPLICATION_CREDENTIALS="/Users/nguyentung/Downloads/google-cloud-
 gcloud functions deploy storyRawDataGCSTrigger \
 --region asia-east2 \
 --memory 256MB \
---timeout 60s \
+--timeout 600s \
 --runtime nodejs8 \
 --trigger-resource story-raw-data \
---env-vars-file .env.yaml
+--env-vars-file .env.yaml \
 --trigger-event google.storage.object.finalize
 ```
 
@@ -23,11 +23,11 @@ gcloud functions deploy convertTextToAudio \
 --memory 256MB \
 --timeout 240s \
 --runtime nodejs8 \
---env-vars-file .env.yaml
+--env-vars-file .env.yaml \
 --trigger-http
 ```
 
-* Try
+## Try
     * Post request with content type is application/json
     * body: ```{"textContent": "Content "}```
 
