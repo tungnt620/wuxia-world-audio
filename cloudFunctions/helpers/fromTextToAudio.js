@@ -3,16 +3,15 @@ const os = require('os')
 const path = require('path')
 const crypto = require('crypto')
 const uuidv4 = require('uuid/v4')
-
 const TextToSpeech = require('@google-cloud/text-to-speech')
 const { Storage } = require('@google-cloud/storage')
-
 const chunkText = require('chunk-text')
 const async = require('async')
 const ffmpeg = require('fluent-ffmpeg')
 const ffmpegStatic = require('ffmpeg-static')
 const ffprobeStatic = require('ffprobe-static')
 const rmrf = require('rimraf')
+const { makeSSMLForBookContent } = require('./makeSSMLForBook')
 
 const isCloud = process.env.ENV === 'cloud'
 
@@ -22,15 +21,16 @@ const gcpBucketName = 'story-chapter-audio'
 const storage = new Storage()
 const ttsClient = new TextToSpeech.TextToSpeechClient()
 
-const languageCode = 'vi-VN', ssmlGender = 'MALE', audioName = 'vi-VN-Wavenet-D'
-
-const fromTextToAudio = (textContent, callbackOnError, callbackOnSuccess) => {
+const fromTextToAudio = (textContent, callbackOnError, callbackOnSuccess, isSSML = false) => {
   if (!textContent) {
     callbackOnError('No text provided!')
   } else {
     rmrf(workingDir, () => {
       fs.mkdirSync(workingDir)
-      const chunkTextContent = chunkText(textContent, 5000)
+
+      // Just few 5000 character because after that we need add some tag for SSML
+      const chunkTextContent = chunkText(textContent, 4000)
+
       async.map(chunkTextContent, getTtsAudio, (err, audio) => {
         if (err) {
           callbackOnError('TTS conversion failed.\n' + err)
@@ -66,11 +66,20 @@ const fromTextToAudio = (textContent, callbackOnError, callbackOnSuccess) => {
 
 // Uses Googles Text-To-Speech API to generate audio from text
 function getTtsAudio (str, cb) {
+  const languageCode = 'vi-VN', ssmlGender = 'MALE', audioName = 'vi-VN-Wavenet-D'
+
+  const ssmlContent = makeSSMLForBookContent(str)
+
   const ttsRequest = {
-    input: { text: str },
-    // input: { ssml: ssml },
+    // input: { text: str },
+    input: { ssml: ssmlContent },
     voice: { languageCode, name: audioName, ssmlGender },
-    audioConfig: { audioEncoding: 'MP3' },
+    audioConfig: {
+      audioEncoding: 'MP3',
+      speakingRate: 0.9,
+      pitch: -8,
+      effectsProfileId: ['handset-class-device'],
+    },
   }
 
   ttsClient.synthesizeSpeech(ttsRequest, (err, res) => {
@@ -105,7 +114,7 @@ function concatAudioFiles (filePaths, cb) {
 // Used to send concatinated audio file to Google Cloud Storage
 function createGcsObject (audioPath, cb) {
   const hash = crypto.createHash('md5').update(uuidv4()).digest('hex')
-  const fileName =  hash + '.mp3'
+  const fileName = hash + '.mp3'
 
   const objectOptions = {
     destination: fileName,
