@@ -12,16 +12,16 @@ const ffmpegStatic = require('ffmpeg-static')
 const ffprobeStatic = require('ffprobe-static')
 const rmrf = require('rimraf')
 const { makeSSMLForBookContent } = require('./makeSSMLForBook')
+const { BOOK_AUDIO_GCP_BUCKET_NAME } = require('../constants')
 
 const isCloud = process.env.ENV === 'cloud'
 
 // process.env.ENV we set in deploy command
 const workingDir = isCloud ? path.join(os.tmpdir(), 'MP3') : 'MP3'
-const gcpBucketName = 'story-chapter-audio'
 const storage = new Storage()
 const ttsClient = new TextToSpeech.TextToSpeechClient()
 
-const fromTextToAudio = (textContent, callbackOnError, callbackOnSuccess, isSSML = false) => {
+const fromTextToAudio = (textContent, callbackOnError, callbackOnSuccess) => {
   if (!textContent) {
     callbackOnError('No text provided!')
   } else {
@@ -125,15 +125,10 @@ function createGcsObject (audioPath, cb) {
   }
 
   storage
-    .bucket(gcpBucketName)
+    .bucket(BOOK_AUDIO_GCP_BUCKET_NAME)
     .upload(audioPath, objectOptions, (err, metadata, apiResponse) => {
       if (err) { cb(err, null) } else { cb(null, fileName) }
     })
 }
 
 exports.fromTextToAudio = fromTextToAudio
-
-// fromTextToAudio('nguyễn thanh tùng',
-//   (errorStr) => console.log(errorStr),
-//   (successStr, mediaLink) => console.log(successStr, mediaLink)
-// )

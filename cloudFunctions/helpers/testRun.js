@@ -3,11 +3,9 @@ const { fromTextToAudio } = require('./fromTextToAudio')
 
 let testContent =
   `
-
-\t[ Ngài đã đồng ý gia nhập hội, xin mời cùng hội viên chào hỏi! ] Còn tặng kèm theo hệ thống khuôn mặt tươi cười.
-
-\t**********
-\t'Teng teng teng ~' lúc này, phần mềm tán gẫu dưới góc phải máy tính nhảy lên.
+Nghĩ đến đây, hắn bấm ‘Đồng ý’. Nghĩ đến đây, hắn bấm
+- Là bạn cùng lớp à?
+Tin thông báo vang lên liên tục, Tống Thư Hàng vốn còn định tắt thông  báo để còn nói mấy câu với nhóm —— Bây giờ hắn đang buồn ngủ chết đi  được, làm gì còn hơi sức đâu mà xem xem mình bị thêm vào nhóm nào?
 
 `
 

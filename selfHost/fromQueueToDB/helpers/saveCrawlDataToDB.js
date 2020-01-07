@@ -3,7 +3,7 @@ const a = {
   desc: 'nguyen',
   img: 'https://google.com/image.jpg',
   author: 'Tung nguyen',
-  cat: 'tien hiep',
+  cats: ['tien hiep'],
   chapter: {
     no: 1,
     name: 'chuong 1',

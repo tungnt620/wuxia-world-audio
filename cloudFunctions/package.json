@@ -1,5 +1,5 @@
 {
-  "name": "story-raw-data-gcs-trigger",
+  "name": "book-raw-data-gcs-trigger",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

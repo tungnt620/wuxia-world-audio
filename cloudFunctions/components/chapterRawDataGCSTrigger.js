@@ -4,11 +4,12 @@ const fs = require('fs')
 const { Message, Producer } = require('redis-smq')
 const sleep = require('sleep-promise')
 const { fromTextToAudio } = require('../helpers/fromTextToAudio')
+const { CHAPTER_REDIS_QUEUE_NAME } = require('../constants')
 
-const producer = new Producer('book-tts', redisSMQConfig)
+const producer = new Producer(CHAPTER_REDIS_QUEUE_NAME, redisSMQConfig)
 const storage = new Storage()
 
-exports.storyRawDataGCSTrigger = async (data) => {
+exports.chapterRawDataGCSTrigger = async (data) => {
   const { bucket: bucketName, name: fileName } = data
 
   const tempFilePath = `/tmp/${fileName}`
@@ -22,9 +23,16 @@ exports.storyRawDataGCSTrigger = async (data) => {
     .file(fileName)
 
   await gcsObject.download(options)
-  const storyData = JSON.parse(fs.readFileSync(tempFilePath, 'utf8'))
+  const chapterData = JSON.parse(fs.readFileSync(tempFilePath, 'utf8'))
 
-  const { chapter_data: { no, name, content } } = storyData
+  await tts(chapterData, bucketName)
+
+  await gcsObject.delete()
+  fs.unlink(tempFilePath, () => {})
+}
+
+async function tts (chapterData, bucketName) {
+  const { no, name, content } = chapterData
   let shouldEndFunction = false
 
   try {
@@ -45,8 +53,8 @@ exports.storyRawDataGCSTrigger = async (data) => {
           .setTTL(60 * 60 * 1000)
 
         producer.produceMessage(message, (err) => {
-          if (err) console.log('Push story crawl data to queue failed', err)
-          else console.log('Successfully push story crawl data to queue')
+          if (err) console.log('Push book crawl data to queue failed', err)
+          else console.log('Successfully push book crawl data to queue')
 
           producer.shutdown()
           shouldEndFunction = true
@@ -62,7 +70,4 @@ exports.storyRawDataGCSTrigger = async (data) => {
   while (!shouldEndFunction) {
     await sleep(10) // Wait 10 ms
   }
-
-  await gcsObject.delete()
-  fs.unlink(tempFilePath, () => {})
 }

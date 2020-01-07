@@ -1,8 +1,8 @@
-
+const { MY_AUDIO_QUEUE_NAMESPACE } = require('../constants')
 // const { Message, Producer } = require('redis-smq');
 
 const config = {
-  namespace: 'book-tts',
+  namespace: MY_AUDIO_QUEUE_NAMESPACE,
   redis: {
     driver: 'redis',
     options: {
@@ -15,8 +15,7 @@ const config = {
 }
 module.exports = config
 
-
-// const producer = new Producer('story-tts', config);
+// const producer = new Producer(MY_AUDIO_QUEUE_NAMESPACE, config);
 // const message = new Message();
 // message
 //   .setBody({
