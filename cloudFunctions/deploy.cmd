@@ -1,7 +1,7 @@
 gcloud functions deploy bookRawDataGCSTrigger \
 --region asia-east2 \
 --memory 256MB \
---timeout 540s \
+--timeout 10s \
 --runtime nodejs8 \
 --trigger-resource book-raw-data \
 --env-vars-file .env.yaml \

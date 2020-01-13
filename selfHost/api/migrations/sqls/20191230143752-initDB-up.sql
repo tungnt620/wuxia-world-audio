@@ -5,7 +5,7 @@ begin transaction;
 CREATE TABLE IF NOT EXISTS "book" (
 	"id"	integer primary key autoincrement,
 	"name"	text not null,
-	"slug"	text not null unique,
+	"slug"	text not null,
 	"desc"	text,
 	"img"	text,
 	"created_at"	text,
@@ -17,7 +17,7 @@ begin transaction;
 CREATE TABLE IF NOT EXISTS  "author" (
 	"id"	integer primary key autoincrement,
 	"name"	text not null,
-	"slug"	text not null unique,
+	"slug"	text not null,
 	"desc"	text,
 	"img"	text,
 	"created_at"	text,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS "chapter" (
     "id" integer primary key autoincrement ,
     "audio" text not null,
     "name" text not null,
-    "slug" text not null unique,
+    "slug" text not null,
     "text" text,
 	"created_at"	text,
 	"updated_at"	text
@@ -59,7 +59,7 @@ begin transaction;
 CREATE TABLE IF NOT EXISTS "cat" (
     "id" integer primary key autoincrement ,
     "name" text not null,
-    "slug" text not null unique,
+    "slug" text not null,
     "desc" text,
     "img" text,
 	"created_at"	text,

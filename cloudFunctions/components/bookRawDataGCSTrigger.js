@@ -22,36 +22,29 @@ exports.bookRawDataGCSTrigger = async (data) => {
   await gcsObject.download(options)
   const bookData = JSON.parse(fs.readFileSync(tempFilePath, 'utf8'))
 
-  await tts(bookData, bucketName, fileName)
+  await saveToRedisQueue(bookData)
 
   await gcsObject.delete()
   fs.unlink(tempFilePath, () => {})
 }
 
-async function tts (bookData, bucketName, fileName) {
-  const { chapter_data: { no, name, content } } = bookData
+async function saveToRedisQueue (bookData) {
   let shouldEndFunction = false
 
   try {
     const message = new Message()
     message
-      .setBody({
-        no,
-        name,
-        content,
-        audio: `https://storage.googleapis.com/${bucketName}/${fileName}`
-      })
+      .setBody(bookData)
       .setTTL(60 * 60 * 1000)
 
     producer.produceMessage(message, (err) => {
       if (err) console.log('Push book crawl data to queue failed', err)
       else console.log('Successfully push book crawl data to queue')
-
-      producer.shutdown()
       shouldEndFunction = true
     })
   } catch (err) {
     shouldEndFunction = true
+    console.log(err.toString())
   }
 
   // Hack

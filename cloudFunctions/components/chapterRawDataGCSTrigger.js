@@ -3,6 +3,7 @@ const { Storage } = require('@google-cloud/storage')
 const fs = require('fs')
 const { Message, Producer } = require('redis-smq')
 const sleep = require('sleep-promise')
+const { BOOK_AUDIO_GCP_BUCKET_NAME } = require('../constants')
 const { fromTextToAudio } = require('../helpers/fromTextToAudio')
 const { CHAPTER_REDIS_QUEUE_NAME } = require('../constants')
 
@@ -31,12 +32,12 @@ exports.chapterRawDataGCSTrigger = async (data) => {
   fs.unlink(tempFilePath, () => {})
 }
 
-async function tts (chapterData, bucketName) {
-  const { no, name, content } = chapterData
+async function tts (chapterData) {
+  const { text } = chapterData
   let shouldEndFunction = false
 
   try {
-    fromTextToAudio(content,
+    fromTextToAudio(text,
       (errorStr) => {
         shouldEndFunction = true
         console.log(errorStr)
@@ -45,18 +46,14 @@ async function tts (chapterData, bucketName) {
         const message = new Message()
         message
           .setBody({
-            no,
-            name,
-            content,
-            audio: `https://storage.googleapis.com/${bucketName}/${fileName}`
+            ...chapterData,
+            audio: `https://storage.googleapis.com/${BOOK_AUDIO_GCP_BUCKET_NAME}/${fileName}`
           })
           .setTTL(60 * 60 * 1000)
 
         producer.produceMessage(message, (err) => {
-          if (err) console.log('Push book crawl data to queue failed', err)
-          else console.log('Successfully push book crawl data to queue')
-
-          producer.shutdown()
+          if (err) console.log('Push chapter crawl data to queue failed', err)
+          else console.log('Successfully push chapter crawl data to queue')
           shouldEndFunction = true
         })
       }
