@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './styles'
 import AudioPlayer from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
-import Book from '../common/Book'
+import V1 from '../common/book/V1'
 
 const BookDetail = () => {
   return (
@@ -40,16 +40,16 @@ const BookDetail = () => {
         <h2 className={'title is-3'}>Sách liên quan</h2>
         <div className={'columns is-multiline'}>
           <div className="column is-one-quarter is-narrow">
-            <Book/>
+            <V1/>
           </div>
           <div className="column is-one-quarter">
-            <Book/>
+            <V1/>
           </div>
           <div className="column is-one-quarter">
-            <Book/>
+            <V1/>
           </div>
           <div className="column is-one-quarter">
-            <Book/>
+            <V1/>
           </div>
         </div>
       </section>

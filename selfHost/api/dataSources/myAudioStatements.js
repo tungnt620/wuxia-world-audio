@@ -1,5 +1,5 @@
 const myAudioStatements = {
-  // =============== Book =======================
+  // =============== BookV1 =======================
   'get_book_by_slug': 'select * from book where slug=$slug',
   'get_book_by_cat_id': `select * from book where id in (
           select book_id from book_cat where cat_id=$catID order by book_id desc limit $limit offset $offset

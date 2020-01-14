@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './styles'
-import Book from '../common/Book'
+import V1 from '../common/book/V1'
 
 const Cat = () => {
   return (
@@ -8,29 +8,29 @@ const Cat = () => {
       <h2 className={'title is-2 has-text-centered'}>Truyện tiên hiệp</h2>
       <div className="columns is-multiline">
         <div className="column is-one-quarter is-narrow">
-          <Book/>
+          <V1/>
         </div>
         <div className="column is-one-quarter">
-          <Book/>
+          <V1/>
         </div>
         <div className="column is-one-quarter">
-          <Book/>
+          <V1/>
         </div>
         <div className="column is-one-quarter">
-          <Book/>
+          <V1/>
         </div>
 
         <div className="column is-one-quarter">
-          <Book/>
+          <V1/>
         </div>
         <div className="column is-one-quarter">
-          <Book/>
+          <V1/>
         </div>
         <div className="column is-one-quarter">
-          <Book/>
+          <V1/>
         </div>
         <div className="column is-one-quarter">
-          <Book/>
+          <V1/>
         </div>
       </div>
       <style jsx>{styles}</style>
