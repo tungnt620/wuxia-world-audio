@@ -17,7 +17,7 @@ const typeDefs = gql`
             limit: Int
             q: String
         ): [Book]!
-        cat(slug: String): Cat 
+        cat(slug: String): Cat
         cats(
             offset: Int
             limit: Int

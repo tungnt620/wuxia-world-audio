@@ -2,8 +2,17 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import styles from './styles'
 
-const Header = () => {
-
+const Header = (
+  {
+    cats = [
+      {
+        id: 1,
+        name: 'Tiên hiệp',
+        slug: 'tien-hiep',
+      }
+    ]
+  }
+) => {
   const [mobileShow, setMobileShow] = useState(false)
 
   return (
@@ -28,20 +37,16 @@ const Header = () => {
             </a>
             <div className="navbar-item has-dropdown is-hoverable">
               <a className="navbar-link" href="">
-                Docs
+                Thể loại
               </a>
               <div className="navbar-dropdown is-boxed">
-                <a className="navbar-item" href="">
-                  Overview
-                </a>
-                <a className="navbar-item" href="">
-                  Modifiers
-                </a>
-
-                <hr className="navbar-divider"/>
-                <div className="navbar-item">
-                  Version 0.8.0
-                </div>
+                {
+                  cats.map((cat) => (
+                    <a key={cat.id} className="navbar-item" href="">
+                      {cat.name}
+                    </a>
+                  ))
+                }
               </div>
             </div>
           </div>

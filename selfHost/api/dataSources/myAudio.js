@@ -9,19 +9,26 @@ class BookDB extends BaseDB {
 
   async getBook (slug) {
     if (slug) {
-      return this._getOne('get_book_by_slug', { slug })
+      const match = slug.match(/([0-9]+)-(.+)/i)
+      if (match.length > 2) {
+        const id = parseInt(match[1]), realSlug = match[2]
+        const book = this._getOne('get_book_by_id', { id })
+        if (book && book.slug === realSlug) {
+          return book
+        }
+      }
     }
     return {}
   }
 
   async getBooks ({ offset, limit, catID, catSlug }) {
-    let statementName
+    let statementName = 'get_books'
     let params = { limit, offset }
     if (catID) {
-      statementName = 'get_book_by_cat_id'
+      statementName = 'get_books_by_cat_id'
       params = { ...params, catID }
     } else if (catSlug) {
-      statementName = 'get_book_by_cat_slug'
+      statementName = 'get_books_by_cat_slug'
       params = { ...params, catSlug }
     }
     return this._getList(statementName, params)

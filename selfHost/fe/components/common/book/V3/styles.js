@@ -3,9 +3,7 @@ import css from 'styled-jsx/css'
 export default css`
   .book-v3 {
     
-    .columns {
-      margin-bottom: 0;
-      margin-top: 0;
+    &.columns {
       
       .name {
         white-space: nowrap;
@@ -13,7 +11,5 @@ export default css`
         text-overflow: ellipsis;
       } 
     }
-    
-    
   }
 `

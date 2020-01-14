@@ -9,7 +9,7 @@ dayjs.extend(relativeTime)
 
 const V3 = (
   {
-    name = 'Linh vũ thiện hạ nguyen thanh tung Linh vũ thiện hạ nguyen thanh tung',
+    name = 'Linh vũ thiện hạ nguyen thanh tung ',
     url,
     chapterUrl,
     chapterNo = 1,
@@ -26,50 +26,48 @@ const V3 = (
   }
 ) => {
   return (
-    <div className={`book-v3`}>
-      <div className={`columns is-mobile ${isOdd ? 'has-background-light' : 'has-background-grey-lighter'}`}>
-        <div className="column is-three-quarters-mobile">
-          <h3 className={'name'}>
-            <a href={url}>{name}</a>
-          </h3>
-        </div>
-        <div className="column is-hidden-mobile">
-          {
-            cats.map((cat, index) => {
-              return (
-                <>
-                  {index > 0 && ', '}
-                  <a
-                    key={cat.id}
-                    href={`/the-loai/${cat.id}-${cat.slug}`}
-                    title={cat.name}
-                  >
-                    {cat.name}
-                  </a>
-                </>
-              )
-            })
-          }
-        </div>
-        <div className="column is-one-quarter-mobile has-text-centered">
-          <a
-            className='is-hidden-desktop is-hidden-tablet'
-            href={chapterUrl}
-            title={`${name} - chương ${chapterNo}`}
-          >
-            {`C${chapterNo}`}
-          </a>
-          <a
-            className='is-hidden-mobile'
-            href={chapterUrl}
-            title={`${name} - chương ${chapterNo}`}
-          >
-            {`Chương ${chapterNo}`}
-          </a>
-        </div>
-        <div className="column is-hidden-mobile">
-          {dayjs(updated_at).fromNow()}
-        </div>
+    <div className={`book-v3 columns is-variable is-1 is-mobile ${isOdd ? 'has-background-light' : 'has-background-grey-lighter'}`}>
+      <div className="column is-three-quarters-mobile">
+        <h3 className={'name'}>
+          <a href={url}>{name}</a>
+        </h3>
+      </div>
+      <div className="column is-hidden-mobile has-text-centered">
+        {
+          cats.map((cat, index) => {
+            return (
+              <>
+                {index > 0 && ', '}
+                <a
+                  key={cat.id}
+                  href={`/the-loai/${cat.id}-${cat.slug}`}
+                  title={cat.name}
+                >
+                  {cat.name}
+                </a>
+              </>
+            )
+          })
+        }
+      </div>
+      <div className="column is-one-quarter-mobile has-text-centered">
+        <a
+          className='is-hidden-desktop is-hidden-tablet'
+          href={chapterUrl}
+          title={`${name} - chương ${chapterNo}`}
+        >
+          {`C${chapterNo}`}
+        </a>
+        <a
+          className='is-hidden-mobile'
+          href={chapterUrl}
+          title={`${name} - chương ${chapterNo}`}
+        >
+          {`Chương ${chapterNo}`}
+        </a>
+      </div>
+      <div className="column is-hidden-mobile">
+        {dayjs(updated_at).fromNow()}
       </div>
 
       <style jsx>{styles}</style>
