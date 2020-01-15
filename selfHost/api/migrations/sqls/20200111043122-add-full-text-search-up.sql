@@ -10,9 +10,9 @@ CREATE TRIGGER book_ai AFTER INSERT ON book BEGIN
   INSERT INTO book_search(rowid, name) VALUES (new.id, new.name);
 END;
 CREATE TRIGGER book_ad AFTER DELETE ON book BEGIN
-  INSERT INTO book_search(fts_idx, rowid, name) VALUES('delete', old.id, old.name);
+  INSERT INTO book_search(book_search, rowid, name) VALUES('delete', old.id, old.name);
 END;
 CREATE TRIGGER book_au AFTER UPDATE ON book BEGIN
-  INSERT INTO book_search(fts_idx, rowid, name) VALUES('delete', old.id, old.name);
+  INSERT INTO book_search(book_search, rowid, name) VALUES('delete', old.id, old.name);
   INSERT INTO book_search(rowid, name) VALUES (new.id, new.name);
 END;

@@ -2,11 +2,11 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
     type Query {
-        book(slug: String): Book
+        book(IDAndSlug: String): Book
         books(
             offset: Int
             limit: Int
-            catSlug: String
+            catIDAndSlug: String
             """
             orderBy include direction ( - for DESC if not will ASC) and field name; Current not support
             """
@@ -17,25 +17,29 @@ const typeDefs = gql`
             limit: Int
             q: String
         ): [Book]!
-        cat(slug: String): Cat
+        cat(IDAndSlug: String): Cat
         cats(
             offset: Int
             limit: Int
         ): [Cat]!
+        author(IDAndSlug: String): Author
+        authors(
+            offset: Int
+            limit: Int
+        ): [Author]!
     }
-
+    
     type Book {
         id: Int
         name: String
         slug: String
         desc: String
         img: String
-        created_at: Int
-        updated_at: Int
+        created_at: String
+        updated_at: String
+        author: Author
         cats: [Cat]
-        authors: [Author]
         relativeBooks: [Book]
-        relativeCats: [Cat]
     }
     type Cat {
         id: Int
@@ -43,9 +47,12 @@ const typeDefs = gql`
         slug: String
         desc: String
         img: String
-        created_at: Int
-        updated_at: Int
-        books: [Book]
+        created_at: String
+        updated_at: String
+        books(
+            offset: Int
+            limit: Int
+        ): [Book]
     }
     type Author {
         id: Int
@@ -53,8 +60,12 @@ const typeDefs = gql`
         slug: String
         desc: String
         img: String
-        created_at: Int
-        updated_at: Int
+        created_at: String
+        updated_at: String
+        books(
+            offset: Int
+            limit: Int
+        ): [Book]
     }
 `
 

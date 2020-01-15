@@ -61,3 +61,12 @@ pm2 restart bid-game-fe
 pm2 logs bid-game-fe
 ```
   - Consult your logs history files in the ```~/.pm2/logs``` folder.
+
+
+** TODO:
+- https://www.npmjs.com/package/async-disk-cache
+    - Can use to cache page
+    - Every version have difference cache name
+    - Should change to new cache name when have new version
+    - And remove old cache when have new
+    - Should test with case multiple process access and update
