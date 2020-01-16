@@ -22,12 +22,20 @@ module.exports = {
       dataSources.myAudio.getAuthorByBookID(book.id),
     relativeBooks: async (book, { limit = 6 }, { dataSources }) =>
       dataSources.myAudio.getRelativeBooksByBookID(book.id, limit),
+    total_chapter: async (book, _, { dataSources }) =>
+      dataSources.myAudio.getTotalChapterByBookID(book.id),
+    chapters: async (book, { offset = 0, limit = 20 }, { dataSources }) =>
+      dataSources.myAudio.getChaptersByBookID(book.id, offset, limit),
   },
   Cat: {
+    total_book: async (cat, _, { dataSources }) =>
+      dataSources.myAudio.getTotalBookByCatID(cat.id),
     books: async (cat, { offset = 0, limit = 10 }, { dataSources }) =>
       dataSources.myAudio.getBooksByCatID(cat.id, offset, limit),
   },
   Author: {
+    total_book: async (author, _, { dataSources }) =>
+      dataSources.myAudio.getTotalBookByAuthorID(author.id),
     books: async (author, { offset = 0, limit = 10 }, { dataSources }) =>
       dataSources.myAudio.getBooksByAuthorID(author.id, offset, limit),
   },

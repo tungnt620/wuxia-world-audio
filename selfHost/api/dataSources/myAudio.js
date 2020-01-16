@@ -46,6 +46,14 @@ class BookDB extends BaseDB {
     }
   }
 
+  async getTotalBookByCatID (catID) {
+    return this._getOneWithPluck('get_total_book_by_cat_id', { catID })
+  }
+
+  async getTotalBookByAuthorID (authorID) {
+    return this._getOneWithPluck('get_total_book_by_author_id', { authorID })
+  }
+
   async getRelativeBooksByBookID (bookID, limit) {
     return this._getList('get_relative_books_by_book_id', { bookID, limit })
   }
@@ -65,6 +73,10 @@ class BookDB extends BaseDB {
     }
   }
 
+  async getCatSByBookID (bookID) {
+    return this._getList('get_cats_by_book_id', { bookID })
+  }
+
   async getCats (offset, limit) {
     return this._getList('get_cats', { limit, offset })
   }
@@ -80,12 +92,16 @@ class BookDB extends BaseDB {
     return this._getList('get_authors', { limit, offset })
   }
 
-  async getCatSByBookID (bookID) {
-    return this._getList('get_cats_by_book_id', { bookID })
-  }
-
   async getAuthorByBookID (bookID) {
     return this._getOne('get_author_by_book_id', { bookID })
+  }
+
+  async getChaptersByBookID (bookID, offset, limit) {
+    return this._getList('get_chapters_by_book_id', { bookID, offset, limit })
+  }
+
+  async getTotalChapterByBookID (bookID) {
+    return this._getOneWithPluck('get_total_chapter_by_book_id', { bookID })
   }
 
 }

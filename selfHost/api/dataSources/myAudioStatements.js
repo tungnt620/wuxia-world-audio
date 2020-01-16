@@ -37,7 +37,14 @@ const myAudioStatements = {
           ) bs
           inner join book b on bs.rowid = b.id
         `,
-
+  'get_total_book_by_cat_id': `
+                select count(*) from book_cat 
+                where cat_id=$catID
+  `,
+  'get_total_book_by_author_id': `
+                select count(*) from book_author
+                where author_id=$authorID
+  `,
   // =============== Cats =====================
   'get_cat_by_id_and_slug': `select * from cat where id=$id and slug=$slug`,
   'get_cats': `select * from cat order by id limit $limit offset $offset`,
@@ -48,7 +55,7 @@ const myAudioStatements = {
                )
   `,
 
-  // =============== Books ====================
+  // =============== Authors ====================
   'get_author_by_id_and_slug': `select * from author where id=$id and slug=$slug`,
   'get_authors': `select * from author order by id limit $limit offset $offset`,
   'get_author_by_book_id': `
@@ -56,6 +63,20 @@ const myAudioStatements = {
                     select author_id from book_author 
                     where book_id=$bookID
                 )`,
+
+  // ============== Chapters ===================
+  'get_chapters_by_book_id': `
+                select * from chapter where id in (
+                    select chapter_id from book_chapter 
+                    where book_id=$bookID
+                    limit $limit offset $offset
+                )
+                order by no asc
+  `,
+  'get_total_chapter_by_book_id': `
+                select count(*) from book_chapter 
+                where book_id=$bookID
+  `,
 }
 
 module.exports = {

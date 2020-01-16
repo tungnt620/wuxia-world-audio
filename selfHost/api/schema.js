@@ -28,18 +28,35 @@ const typeDefs = gql`
             limit: Int
         ): [Author]!
     }
-    
+
     type Book {
         id: Int
         name: String
         slug: String
         desc: String
         img: String
+        num_vote: Int
+        sum_vote: Int
+        view: Int
         created_at: String
         updated_at: String
+        total_chapter: Int
+        chapters(
+            offset: Int
+            limit: Int
+        ): [Chapter]
         author: Author
         cats: [Cat]
         relativeBooks: [Book]
+    }
+    type Chapter {
+        id: Int
+        name: String
+        slug: String
+        text: String
+        audio: String
+        created_at: String
+        updated_at: String
     }
     type Cat {
         id: Int
@@ -49,6 +66,7 @@ const typeDefs = gql`
         img: String
         created_at: String
         updated_at: String
+        total_book: Int
         books(
             offset: Int
             limit: Int
@@ -62,6 +80,7 @@ const typeDefs = gql`
         img: String
         created_at: String
         updated_at: String
+        total_book: Int
         books(
             offset: Int
             limit: Int

@@ -8,6 +8,9 @@ CREATE TABLE IF NOT EXISTS "book" (
 	"slug"	text not null,
 	"desc"	text,
 	"img"	text,
+	"num_vote" integer not null default 0,
+	"sum_vote" integer not null default 0,
+	"view" integer not null default 0,
 	"created_at"	text,
 	"updated_at"	text
 );
@@ -37,6 +40,7 @@ commit;
 begin transaction;
 CREATE TABLE IF NOT EXISTS "chapter" (
     "id" integer primary key autoincrement ,
+    "no" integer not null,
     "audio" text not null,
     "name" text not null,
     "slug" text not null,
