@@ -1,8 +1,19 @@
+const { fromTextToAudio } = require('./helpers/fromTextToAudio')
 
-const { bookRawDataGCSTrigger } = require('./components/bookRawDataGCSTrigger')
-const { chapterRawDataGCSTrigger } = require('./components/chapterRawDataGCSTrigger')
-const { convertTextToAudio } = require('./components/convertTextToAudio')
+exports.convertTextToAudio = async (req, res) => {
+  const { textContent } = req.body
 
-exports.bookRawDataGCSTrigger = bookRawDataGCSTrigger
-exports.chapterRawDataGCSTrigger = chapterRawDataGCSTrigger
-exports.convertTextToAudio = convertTextToAudio
+  try {
+    fromTextToAudio(
+      textContent,
+      (errorStr) => {
+        res.status(400).send(errorStr)
+      },
+      (successStr, fileName) => {
+        res.status(200).send(fileName)
+      }
+    )
+  } catch (err) {
+    res.status(400).send(err.toString())
+  }
+}

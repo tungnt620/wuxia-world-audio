@@ -1,5 +1,5 @@
 const slugify = require('slugify')
 
-exports.getSlugFromString = (str, needAddRandomNumber=false) => {
+exports.getSlugFromString = (str) => {
   return slugify(str)
 }

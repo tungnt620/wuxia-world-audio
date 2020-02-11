@@ -20,9 +20,13 @@ fabfile.py
 fabfile.pyc
 dataDir
 .db
-myAudio.db
 .db-journal
+myAudio.db
 myAudio.db-journal
 myAudio.db-shm
 myAudio.db-wal
+myAudioAdmin.db
+myAudioAdmin.db-journal
+myAudioAdmin.db-shm
+myAudioAdmin.db-wal
 MP3

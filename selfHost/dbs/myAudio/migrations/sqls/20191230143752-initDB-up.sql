@@ -5,14 +5,19 @@ begin transaction;
 CREATE TABLE IF NOT EXISTS "book" (
 	"id"	integer primary key autoincrement,
 	"name"	text not null,
-	"slug"	text not null,
+	"slug"	text,
 	"desc"	text,
 	"img"	text,
+	"is_full" integer not null default 0,
 	"num_vote" integer not null default 0,
 	"sum_vote" integer not null default 0,
 	"view" integer not null default 0,
+	"source"        text,
+	"source_id"     text,
+	"is_public"     integer default 0,
 	"created_at"	text,
-	"updated_at"	text
+	"updated_at"	text,
+	UNIQUE(source, source_id)
 );
 commit;
 
@@ -20,7 +25,7 @@ begin transaction;
 CREATE TABLE IF NOT EXISTS  "author" (
 	"id"	integer primary key autoincrement,
 	"name"	text not null,
-	"slug"	text not null,
+	"slug"	text,
 	"desc"	text,
 	"img"	text,
 	"created_at"	text,
@@ -40,11 +45,11 @@ commit;
 begin transaction;
 CREATE TABLE IF NOT EXISTS "chapter" (
     "id" integer primary key autoincrement ,
-    "no" integer not null,
-    "audio" text not null,
-    "name" text not null,
-    "slug" text not null,
+    "order_no" integer not null,
+    "name" text,
+    "slug" text,
     "text" text,
+    "audio" text,
 	"created_at"	text,
 	"updated_at"	text
 );
@@ -63,7 +68,7 @@ begin transaction;
 CREATE TABLE IF NOT EXISTS "cat" (
     "id" integer primary key autoincrement ,
     "name" text not null,
-    "slug" text not null,
+    "slug" text,
     "desc" text,
     "img" text,
 	"created_at"	text,

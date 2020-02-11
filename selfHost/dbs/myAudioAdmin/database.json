@@ -1,0 +1,11 @@
+{
+  "sql-file": true,
+  "dev": {
+    "driver": "sqlite3",
+    "filename": "./dataDir/myAudioAdmin.db"
+  },
+  "prod": {
+    "driver": "sqlite3",
+    "filename": "./dataDir/myAudioAdmin.db"
+  }
+}

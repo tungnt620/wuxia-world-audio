@@ -35,6 +35,7 @@ const typeDefs = gql`
         slug: String
         desc: String
         img: String
+        is_full: Int
         num_vote: Int
         sum_vote: Int
         view: Int
