@@ -15,7 +15,7 @@
     "express": "latest",
     "http-terminator": "^2.0.2",
     "node-fetch": "latest",
-    "redis": "^2.8.0",
+    "redis": "^3.0.2",
     "util": "^0.11.1"
   }
 }

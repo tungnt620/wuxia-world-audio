@@ -3,10 +3,12 @@ import thunk from 'redux-thunk'
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import userReducer from 'store/user/reducers'
 import crawlReducer from 'store/crawl/reducers'
+import bookReducer from 'store/book/reducers'
 
 const rootReducer = combineReducers({
   user: userReducer,
   crawl: crawlReducer,
+  book: bookReducer,
 })
 
 const middlewares = [thunk]

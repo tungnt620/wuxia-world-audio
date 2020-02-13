@@ -13,10 +13,10 @@ const CrawlNewBookTTVBtn = () => {
   useEffect(() => {
     dispatch(getStatusCrawlNewBookTTVStatus())
   }, [])
-  // book_url=https://truyen.tangthuvien.vn/doc-truyen/de-ba -d is_override=0 -d old_book_slug=xyz -d redis_stream_name=abc
+
   function crawl () {
     dispatch(crawlNewBookTTV({
-      book_url: 'https://truyen.tangthuvien.vn/doc-truyen/de-ba'
+      book_url: 'https://truyen.tangthuvien.vn/doc-truyen/de-ba',
     }))
   }
 

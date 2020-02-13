@@ -38,6 +38,12 @@ class BaseDB {
     // Return first column value
     return this.db.prepare(this.statements[statementName]).pluck().get(params || {})
   }
+
+  _run ({ statementName='', params = {}, statement = '' }) {
+    // if error raise Error exception
+    // return { changes, lastInsertRowid }
+    return this.db.prepare(statementName ? this.statements[statementName] : statement).run(params || {})
+  }
 }
 
 module.exports = {

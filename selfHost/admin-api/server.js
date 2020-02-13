@@ -2,8 +2,15 @@ const { createHttpTerminator } = require('http-terminator');
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const { crawl } = require('./apiFunctions/crawl')
-const { getStatusCrawl } = require('./apiFunctions/crawl')
+const { crawl } = require('./helpers/crawl')
+const { getStatusCrawl } = require('./helpers/crawl')
+
+// Run jobs
+let { isProcessShutDown } = require('./jobs')
+require('./jobs').run()
+
+const { updateBook } = require('./helpers/book')
+const { getBooks } = require('./helpers/book')
 
 const app = express()
 const port = 4001
@@ -18,15 +25,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
+app.get('/api/book', async function (req, res) {
+  const resp = await getBooks(req.query.page)
+  await res.json(resp)
+})
+
+app.post('/api/book/:id', async function (req, res) {
+  const resp = await updateBook(req.params.id, req.body)
+  await res.json(resp)
+})
+
 app.post('/api/crawl/:crawlType', async function (req, res) {
-  console.log(req.body)
   const resp = await crawl(req.params.crawlType, req.body)
-  res.json(resp)
+  await res.json(resp)
 })
 
 app.get('/api/crawl/:crawlType/get-status', async function (req, res) {
   const resp = await getStatusCrawl(req.params.crawlType)
-  res.json(resp)
+  await res.json(resp)
 })
 
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
@@ -39,7 +55,7 @@ const httpTerminator = createHttpTerminator({
 // Graceful shutdown
 process.on('SIGINT', async () => {
   const cleanUp = () => {
-    // Clean up other resources like DB connections, current job, queue
+    isProcessShutDown = true
   }
   console.log('Closing server...')
 

@@ -4,8 +4,8 @@ import MainLayout from 'components/MainLayout'
 import NotFound from 'components/NotFound'
 import 'App.scss'
 import Loading from './components/common/Loading'
-
-const Home = lazy(() => import('components/Home'))
+import Home from './components/Home'
+import BookList from './components/Book/List'
 
 class App extends Component {
   render () {
@@ -16,6 +16,7 @@ class App extends Component {
         >
           <Switch>
             <Route path="/" exact component={Home}/>
+            <Route path="/book/list" exact component={BookList}/>
             <Route component={NotFound}/>
           </Switch>
         </Suspense>

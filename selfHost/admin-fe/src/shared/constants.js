@@ -2,6 +2,7 @@ export const LOCALSTORAGE_PREFIX = 'my-audio-admin-fe'
 
 export const CRAWL_STATUS_CRAWLING = 'crawling'
 
+export const ITEM_PER_PAGE = 10
 
 
 

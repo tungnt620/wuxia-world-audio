@@ -35,7 +35,7 @@ export default class ReducerBase {
     return this.initial
   }
 
-  reducer = (state = this.initial, action) => {
+  reducer (state = this.initial, action) {
     const { type, payload } = action
     switch (type) {
       case this.actionType.start():
