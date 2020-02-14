@@ -1,8 +1,8 @@
 const { AdminBookDB } = require('../dataSources/DB')
 const Database = require('better-sqlite3')
 const redis = require('redis')
-const { LAST_ID_BOOK_STREAM_KEY } = require('../constants')
-const { REDIS_STREAM_KEY_BOOK } = require('../constants')
+const { REDIS_STREAM_KEY_CHAPTER } = require('../constants')
+const { LAST_ID_CHAPTER_STREAM_KEY } = require('../constants')
 const client = redis.createClient({
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
@@ -20,13 +20,13 @@ client.on('error', function (error) {
 })
 
 async function saveBookToDB () {
-  let lastID = await adminBookDB.getValueFromKey(LAST_ID_BOOK_STREAM_KEY)
+  let lastID = await adminBookDB.getValueFromKey(LAST_ID_CHAPTER_STREAM_KEY)
   console.log('last id in stream is: ', lastID)
   if (!lastID) lastID = '$'
 
   client.send_command(
     'XREAD',
-    ['BLOCK', 0, 'STREAMS', REDIS_STREAM_KEY_BOOK, lastID],
+    ['BLOCK', 0, 'STREAMS', REDIS_STREAM_KEY_CHAPTER, lastID],
     async (err, data) => {
       if (!err) {
         try {
@@ -34,21 +34,13 @@ async function saveBookToDB () {
 
           lastID = data[0][1][0][0]
 
-          await adminBookDB.saveKeyValue(LAST_ID_BOOK_STREAM_KEY, lastID)
-          const bookData = JSON.parse(data[0][1][0][1][1])
+          await adminBookDB.saveKeyValue(LAST_ID_CHAPTER_STREAM_KEY, lastID)
+          const chapterCrawlData = JSON.parse(data[0][1][0][1][1])
 
-          const { author: authorName, cats: catNames, ...newBookData } = bookData
-
-          bookDB.updateBook(newBookData)
-          const book = bookDB.getBookByID(newBookData.id)
-
-          const author = bookDB.getOrCreateAuthor(authorName)
-          bookDB.insertIfNotExistBookAuthor(book.id, author.id)
-
-          JSON.parse(catNames).forEach((catName) => {
-            const cat = bookDB.getOrCreateCat(catName)
-            bookDB.insertIfNotExistBookCat(book.id, cat.id)
-          })
+          const { book_id, ...chapterData } = chapterCrawlData
+          bookDB.deleteChapterByBookIDAndOrderNo(book_id, chapterData.order_no)
+          const { lastInsertRowid } = bookDB.insertChapter(chapterData)
+          bookDB.insertIfNotExistBookChapter(book_id, lastInsertRowid)
 
           console.log('save data success')
         } catch (err) {

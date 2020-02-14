@@ -9,10 +9,6 @@ exports.getIDFromSlug =(slug = '') => {
   return []
 }
 
-exports.getCrawlStatusKey = (crawlType) => {
-  return `crawl-${crawlType}-status`
-}
-
 exports.getSlugFromString = (str = '') => {
   return slugify(str.toLowerCase())
 }

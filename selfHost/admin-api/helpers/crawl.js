@@ -8,12 +8,26 @@ const { REDIS_STREAM_KEY_BOOK } = require('../constants')
 const { REDIS_STREAM_KEY_CHAPTER } = require('../constants')
 const { API_CODE_ERROR } = require('../constants')
 const { REDIS_STREAM_KEY_NEW_BOOKS } = require('../constants')
-const { getCrawlStatusKey } = require('../utils')
 const db = new Database(process.env.DB_URL)
 
 const adminBookDB = new AdminBookDB(db)
 
-async function getStatusCrawl (crawlType) {
+function getCrawlJobIDKeyInDB (crawlType, params) {
+  switch (crawlType) {
+    case 'new_ttv_book':
+      return `crawl-${crawlType}-status`
+    case 'ttv_book':
+      return `crawl-${crawlType}-${params.id}`
+    case 'ttv_chapter':
+      return `crawl-${crawlType}-${params.book_id}`
+  }
+}
+
+function getJobID (crawlType, params) {
+  return adminBookDB.getValueFromKey(getCrawlJobIDKeyInDB(crawlType, params))
+}
+
+async function getStatusCrawl (crawlType, params) {
   try {
     const resp = await fetch(process.env.CRAWL_SERVICE_URL + '/listjobs.json?project=default', {
       method: 'GET',
@@ -21,9 +35,13 @@ async function getStatusCrawl (crawlType) {
     })
     const listJobs = await resp.json()
 
-    const lastJobID = await adminBookDB.getValueFromKey(getCrawlStatusKey(crawlType))
+    const lastJobID = getJobID(crawlType, params)
     let crawlStatus = CRAWL_STATUS_COMPLETED
-    if (listJobs['pending'].includes(lastJobID) || listJobs['running'].includes(lastJobID)) {
+
+    console.log(lastJobID)
+    console.log(listJobs)
+
+    if ([...listJobs['pending'], ...listJobs['running']].some((job) => job.id === lastJobID)) {
       crawlStatus = CRAWL_STATUS_CRAWLING
     }
 
@@ -67,6 +85,9 @@ async function crawl (crawlType, reqBody) {
 
     const data = await resp.json()
     if (data.status === 'ok') {
+      const jobID = data.jobid
+      adminBookDB.saveKeyValue(getCrawlJobIDKeyInDB(crawlType, params), jobID)
+
       return getResponse({ data })
     } else {
       return getResponse({ code: API_CODE_ERROR, error: data })

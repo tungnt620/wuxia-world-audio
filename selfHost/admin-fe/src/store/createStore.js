@@ -2,7 +2,7 @@ import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import userReducer from 'store/user/reducers'
-import crawlReducer from 'store/crawl/reducers'
+import crawlReducer from 'store/crawl/reducer'
 import bookReducer from 'store/book/reducers'
 
 const rootReducer = combineReducers({

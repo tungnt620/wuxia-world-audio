@@ -47,7 +47,9 @@ class AdminBookDB extends BaseDB {
 
   updateBook (bookData) {
     const { id, ...newData } = bookData
-    bookData.updated_at = (new Date()).toISOString()
+    const today = (new Date()).toISOString()
+    newData.updated_at = today
+    bookData.updated_at = today
 
     let setValueStm = ''
     Object.keys(newData).forEach((fieldName) => {
@@ -123,6 +125,35 @@ class AdminBookDB extends BaseDB {
 
   insertIfNotExistBookChapter (book_id, chapter_id) {
     return this._run({ statementName: 'insert_if_not_exist_book_chapter', params: { book_id, chapter_id } })
+  }
+
+  getChapter(book_id, order_no) {
+    return this._getOne('get_chapter', { book_id, order_no })
+  }
+
+  insertChapter (chapterData) {
+    const today = (new Date()).toISOString()
+    chapterData.created_at = today
+    chapterData.updated_at = today
+    chapterData.slug = getSlugFromString(chapterData.name)
+
+    return this._run({ statementName: 'insert_chapter', params: chapterData })
+  }
+
+  deleteChapterByID (id) {
+    return this._run({ statementName: 'delete_chapter_by_id', params: { id }})
+  }
+
+  deleteBookChapterRelationship (book_id, chapter_id) {
+    return this._run({ statementName: 'delete_book_chapter_relationship', params: { book_id, chapter_id } })
+  }
+
+  deleteChapterByBookIDAndOrderNo (book_id, order_no) {
+    const chapter = this.getChapter(book_id, order_no)
+    if (chapter) {
+      this.deleteBookChapterRelationship(book_id, chapter.id)
+      this.deleteChapterByID(chapter.id)
+    }
   }
 }
 

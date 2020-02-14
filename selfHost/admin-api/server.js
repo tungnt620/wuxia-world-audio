@@ -2,6 +2,7 @@ const { createHttpTerminator } = require('http-terminator');
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const { getBook } = require('./helpers/book')
 const { crawl } = require('./helpers/crawl')
 const { getStatusCrawl } = require('./helpers/crawl')
 
@@ -27,6 +28,11 @@ app.use(bodyParser.raw());
 
 app.get('/api/book', async function (req, res) {
   const resp = await getBooks(req.query.page)
+  await res.json(resp)
+})
+
+app.get('/api/book/:id', async function (req, res) {
+  const resp = await getBook(req.params.id)
   await res.json(resp)
 })
 

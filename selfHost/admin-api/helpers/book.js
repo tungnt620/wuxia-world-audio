@@ -25,9 +25,19 @@ async function getBooks (page = 1) {
   }
 }
 
+async function getBook (id) {
+  try {
+    const book = bookDB.getBookByID(id)
+    return getResponse({ data: book })
+  } catch (err) {
+    console.log(err)
+    return getResponse({ code: API_CODE_ERROR, error: err.toString() })
+  }
+}
+
 async function updateBook (id, newData) {
   try {
-    bookDB.updateBook({ id, ...newData})
+    bookDB.updateBook({ id, ...newData })
     return getResponse()
   } catch (err) {
     console.log(err)
@@ -37,5 +47,6 @@ async function updateBook (id, newData) {
 
 module.exports = {
   getBooks,
+  getBook,
   updateBook,
 }

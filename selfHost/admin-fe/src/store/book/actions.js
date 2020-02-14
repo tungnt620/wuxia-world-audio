@@ -40,3 +40,26 @@ export const updateBook = (id, params, callback) => {
     }
   })
 }
+
+export const getBook = (id, callback) => {
+  return detailAction.makeAction({
+    url: `/api/book/${id}`,
+    method: 'get',
+    onRequestSuccessCallback: (dispatch, respData) => {
+      const { code, data, msg } = respData
+
+      if (code === API_SUCCESS) {
+        dispatch(detailAction.success({ data }))
+        dispatch({
+          type: actionTypes.LIST_BOOK.custom('update_items'),
+          payload: {
+            items: [data]
+          }
+        })
+      } else {
+        dispatch(detailAction.fail({ error: msg }))
+      }
+      if (callback) callback()
+    }
+  })
+}
