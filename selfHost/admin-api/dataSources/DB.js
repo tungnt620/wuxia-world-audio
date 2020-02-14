@@ -113,8 +113,17 @@ class AdminBookDB extends BaseDB {
     return cat
   }
 
+  insertIfNotExistBookAuthor (book_id, author_id) {
+    return this._run({ statementName: 'insert_if_not_exist_book_author', params: { book_id, author_id } })
+  }
 
+  insertIfNotExistBookCat (book_id, cat_id) {
+    return this._run({ statementName: 'insert_if_not_exist_book_cat', params: { book_id, cat_id } })
+  }
 
+  insertIfNotExistBookChapter (book_id, chapter_id) {
+    return this._run({ statementName: 'insert_if_not_exist_book_chapter', params: { book_id, chapter_id } })
+  }
 }
 
 module.exports = {

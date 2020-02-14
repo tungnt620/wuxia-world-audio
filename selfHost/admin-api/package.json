@@ -16,6 +16,7 @@
     "http-terminator": "^2.0.2",
     "node-fetch": "latest",
     "redis": "^3.0.2",
+    "slugify": "^1.3.6",
     "util": "^0.11.1"
   }
 }

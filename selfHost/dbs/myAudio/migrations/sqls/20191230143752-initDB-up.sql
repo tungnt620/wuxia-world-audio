@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS  "author" (
 	"desc"	text,
 	"img"	text,
 	"created_at"	text,
-	"updated_at"	text
+	"updated_at"	text,
+	UNIQUE(name)
 );
 commit;
 
@@ -38,7 +39,8 @@ CREATE TABLE IF NOT EXISTS "book_author" (
 	"book_id"	integer not null,
 	"author_id"	integer not null,
 	foreign key("book_id") references "book"("id"),
-	foreign key("author_id") references "author"("id")
+	foreign key("author_id") references "author"("id"),
+	UNIQUE(book_id, author_id)
 );
 commit;
 
@@ -60,7 +62,8 @@ CREATE TABLE IF NOT EXISTS "book_chapter" (
     "book_id" integer not null,
     "chapter_id" integer not null,
     foreign key ("book_id") references "book"("id"),
-    foreign key ("chapter_id") references "chapter"("id")
+    foreign key ("chapter_id") references "chapter"("id"),
+	UNIQUE(book_id, chapter_id)
 );
 commit;
 
@@ -72,7 +75,8 @@ CREATE TABLE IF NOT EXISTS "cat" (
     "desc" text,
     "img" text,
 	"created_at"	text,
-	"updated_at"	text
+	"updated_at"	text,
+	UNIQUE(name)
 );
 commit;
 
@@ -81,6 +85,7 @@ CREATE TABLE IF NOT EXISTS "book_cat" (
     "book_id" integer not null,
     "cat_id" integer not null,
     foreign key ("book_id") references "book"("id"),
-    foreign key ("cat_id") references "cat"("id")
+    foreign key ("cat_id") references "cat"("id"),
+	UNIQUE(book_id, cat_id)
 );
 -- Commit of this transaction will do by db-migrate

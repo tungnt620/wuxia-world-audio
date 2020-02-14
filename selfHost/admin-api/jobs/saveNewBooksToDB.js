@@ -28,19 +28,23 @@ async function saveNewBooksToDB () {
     ['BLOCK', 0, 'STREAMS', REDIS_STREAM_KEY_NEW_BOOKS, lastID],
     async (err, data) => {
       if (!err) {
-        console.log('Get data from stream: ')
+        try {
+          console.log('Get data from stream: ')
 
-        lastID = data[0][1][0][0]
-        await adminBookDB.saveKeyValue(LAST_ID_NEW_BOOKS_STREAM_KEY, lastID)
-        const newBooks = JSON.parse(data[0][1][0][1][1])
-        newBooks.forEach((book) => {
-          const bookData = bookDB.getBook(book.source, book.source_id)
-          console.log('is book exists: ' + !!bookData)
-          if (!bookData) {
-            const insertResult = bookDB.insertBook(book)
-            console.log(insertResult)
-          }
-        })
+          lastID = data[0][1][0][0]
+          await adminBookDB.saveKeyValue(LAST_ID_NEW_BOOKS_STREAM_KEY, lastID)
+          const newBooks = JSON.parse(data[0][1][0][1][1])
+          newBooks.forEach((book) => {
+            const bookData = bookDB.getBook(book.source, book.source_id)
+            console.log('is book exists: ' + !!bookData)
+            if (!bookData) {
+              const insertResult = bookDB.insertBook(book)
+              console.log(insertResult)
+            }
+          })
+        } catch (err) {
+          console.log(err)
+        }
 
         if (!isProcessShutDown) {
           await saveNewBooksToDB()

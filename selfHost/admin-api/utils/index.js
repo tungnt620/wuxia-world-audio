@@ -13,6 +13,6 @@ exports.getCrawlStatusKey = (crawlType) => {
   return `crawl-${crawlType}-status`
 }
 
-exports.getSlugFromString = (str) => {
-  return slugify(str)
+exports.getSlugFromString = (str = '') => {
+  return slugify(str.toLowerCase())
 }
