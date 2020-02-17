@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 
-const { Item, SubMenu } = Menu
+const { Item } = Menu
 
 const Navigation = () => {
   const { pathname } = useLocation()

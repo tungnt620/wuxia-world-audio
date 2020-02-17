@@ -1,27 +1,55 @@
 import React, { useState } from 'react'
 import { Button } from 'antd'
 import { useDispatch } from 'react-redux'
-import { crawlBookTTV, crawlChapterTTV } from '../../../../../store/crawl/actions'
-import { getBook } from '../../../../../store/book/actions'
+import {
+  crawlChapterTTV,
+  getStatusCrawlChapterTTVStatus
+} from '../../../../../store/crawl/actions'
 
-const CrawlTTVBookBtn = ({ record }) => {
+const CrawlTTVChaptersBtn = ({ record }) => {
   const dispatch = useDispatch()
+  const [isGetStatus, setIsGetStatus] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [crawling, setCrawling] = useState(false)
 
   const onClick = () => {
-    const bookID = record.id
+    if (isGetStatus) {
+      setLoading(true)
+      const bookID = record.id
+
+      dispatch(crawlChapterTTV(
+        {
+          book_id: bookID,
+          book_url: `https://truyen.tangthuvien.vn/doc-truyen/${record.source_id}`,
+          chapter_num: 1,
+        },
+        () => {
+          setCrawling(false)
+          setLoading(false)
+        }
+      ))
+      setIsGetStatus(false)
+    } else {
+      getCrawlStatus()
+    }
+  }
+
+  const getCrawlStatus = () => {
     setLoading(true)
-    dispatch(crawlChapterTTV(
-      {
-        book_id: bookID,
-        book_url: `https://truyen.tangthuvien.vn/doc-truyen/${record.source_id}`,
-        chapter_num: 1,
+    dispatch(getStatusCrawlChapterTTVStatus({
+      id: record.id,
+    }, (isWaiting) => {
+      setIsGetStatus(true)
+      if (isWaiting) {
+        setCrawling(true)
+        setTimeout(() => {
+          getCrawlStatus()
+        }, 3000)
+      } else {
+        setCrawling(false)
       }
-    ))
-    setTimeout(() => {
       setLoading(false)
-      dispatch(getBook(bookID))
-    }, 5000)
+    }))
   }
 
   return (
@@ -29,10 +57,14 @@ const CrawlTTVBookBtn = ({ record }) => {
       <Button
         onClick={onClick}
         loading={loading}
+        disabled={crawling}
       >
-        Crawl
+        Chapter:
+        {
+          crawling ? ' Crawling' : (isGetStatus ? ' Crawl' : ' Get status')
+        }
       </Button>
     </>
   )
 }
-export default CrawlTTVBookBtn
+export default CrawlTTVChaptersBtn

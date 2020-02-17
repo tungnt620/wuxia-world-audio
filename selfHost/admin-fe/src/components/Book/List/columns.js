@@ -1,9 +1,10 @@
 import MarkPublicBtn from './components/MarkPublicBtn'
 import React from 'react'
-import { Button, Tooltip } from 'antd'
+import { Avatar, Button, Tooltip } from 'antd'
 import CrawlTTVBookBtn from './components/CrawlTTVBookBtn'
 import moment from 'moment'
 import { ISO_DATE_TIME_FORMAT } from '../../../shared/constants'
+import CrawlTTVChaptersBtn from './components/CrawlTTVChaptersBtn'
 
 export default [
   {
@@ -24,6 +25,16 @@ export default [
     }
   },
   {
+    title: 'Img',
+    dataIndex: 'img',
+    key: 'img',
+    render: (text, record) => {
+      return (
+        <Avatar shape="square" size={64} src={text} />
+      )
+    }
+  },
+  {
     title: 'Slug',
     dataIndex: 'slug',
     key: 'slug',
@@ -34,14 +45,14 @@ export default [
     key: 'is_public',
   },
   {
-    title: 'Source',
-    dataIndex: 'source',
-    key: 'source',
+    title: 'Total chapter',
+    dataIndex: 'total_chapter',
+    key: 'total_chapter',
   },
   {
-    title: 'Source ID',
-    dataIndex: 'source_id',
-    key: 'source_id',
+    title: 'Num audio',
+    dataIndex: 'num_audio',
+    key: 'num_audio',
   },
   {
     title: 'Updated at',
@@ -64,6 +75,8 @@ export default [
         <Button.Group>
           <MarkPublicBtn record={record}/>
           <CrawlTTVBookBtn record={record}/>
+          <CrawlTTVChaptersBtn record={record}/>
+          <Button><a href={`/chapter/list/?bookID=${record.id}`}>View chapters</a></Button>
         </Button.Group>
       )
     }

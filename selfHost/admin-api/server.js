@@ -2,6 +2,11 @@ const { createHttpTerminator } = require('http-terminator');
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const { convertBookAudio } = require('./helpers/audio')
+const { convertChapterAudio } = require('./helpers/audio')
+const { updateChapter } = require('./helpers/chapter')
+const { getChapter } = require('./helpers/chapter')
+const { getChapters } = require('./helpers/chapter')
 const { getBook } = require('./helpers/book')
 const { crawl } = require('./helpers/crawl')
 const { getStatusCrawl } = require('./helpers/crawl')
@@ -41,13 +46,39 @@ app.post('/api/book/:id', async function (req, res) {
   await res.json(resp)
 })
 
+app.get('/api/chapter', async function (req, res) {
+  const resp = await getChapters(req.query)
+  await res.json(resp)
+})
+
+app.get('/api/chapter/:id', async function (req, res) {
+  const resp = await getChapter(req.params.id)
+  await res.json(resp)
+})
+
+app.post('/api/chapter/:id', async function (req, res) {
+  const resp = await updateChapter(req.params.id, req.body)
+  await res.json(resp)
+})
+
 app.post('/api/crawl/:crawlType', async function (req, res) {
   const resp = await crawl(req.params.crawlType, req.body)
   await res.json(resp)
 })
 
+app.post('/api/convert-audio', async function (req, res) {
+  const { ids, bookID} = req.body
+  let resp
+  if (bookID) {
+    resp = await convertBookAudio(bookID)
+  } else {
+    resp = await convertChapterAudio(ids)
+  }
+  await res.json(resp)
+})
+
 app.get('/api/crawl/:crawlType/get-status', async function (req, res) {
-  const resp = await getStatusCrawl(req.params.crawlType)
+  const resp = await getStatusCrawl(req.params.crawlType, req.query)
   await res.json(resp)
 })
 

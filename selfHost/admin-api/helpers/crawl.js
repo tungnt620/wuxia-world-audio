@@ -86,7 +86,7 @@ async function crawl (crawlType, reqBody) {
     const data = await resp.json()
     if (data.status === 'ok') {
       const jobID = data.jobid
-      adminBookDB.saveKeyValue(getCrawlJobIDKeyInDB(crawlType, params), jobID)
+      adminBookDB.saveKeyValue(getCrawlJobIDKeyInDB(crawlType, reqBody), jobID)
 
       return getResponse({ data })
     } else {

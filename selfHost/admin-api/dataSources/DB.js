@@ -9,6 +9,24 @@ class AdminBookDB extends BaseDB {
     this.setStatements(adminStatements)
   }
 
+  updateTable (tableName, data) {
+    const { id, ...newData } = data
+    const today = (new Date()).toISOString()
+    newData.updated_at = today
+    data.updated_at = today
+
+    let setValueStm = ''
+    Object.keys(newData).forEach((fieldName) => {
+      setValueStm += ` ${fieldName}=$${fieldName},`
+    })
+    if (setValueStm.endsWith(',')) {
+      setValueStm = setValueStm.substring(0, setValueStm.length - 1)
+    }
+    const statement = `update ${tableName} set ${setValueStm} where id=$id`
+
+    return this._run({ statement, params: data })
+  }
+
   getValueFromKey (key) {
     const data = this._getOne('get_value_from_key', { key })
     if (data) {
@@ -43,24 +61,6 @@ class AdminBookDB extends BaseDB {
     bookData.updated_at = today
     bookData.slug = getSlugFromString(bookData.name)
     return this._run({ statementName: 'insert_book', params: bookData })
-  }
-
-  updateBook (bookData) {
-    const { id, ...newData } = bookData
-    const today = (new Date()).toISOString()
-    newData.updated_at = today
-    bookData.updated_at = today
-
-    let setValueStm = ''
-    Object.keys(newData).forEach((fieldName) => {
-      setValueStm += ` ${fieldName}=$${fieldName},`
-    })
-    if (setValueStm.endsWith(',')) {
-      setValueStm = setValueStm.substring(0, setValueStm.length - 1)
-    }
-    const statement = `update book set ${setValueStm} where id=$id`
-
-    return this._run({ statement, params: bookData })
   }
 
   getAuthorByName (name) {
@@ -127,8 +127,24 @@ class AdminBookDB extends BaseDB {
     return this._run({ statementName: 'insert_if_not_exist_book_chapter', params: { book_id, chapter_id } })
   }
 
-  getChapter(book_id, order_no) {
+  getChapterByID (id) {
+    return this._getOne('get_chapter_by_id', { id })
+  }
+
+  getChaptersByIDs (ids) {
+    return this._getList('get_chapters_by_ids', { ids })
+  }
+
+  getChapter (book_id, order_no) {
     return this._getOne('get_chapter', { book_id, order_no })
+  }
+
+  getChapters (bookID, offset, limit = ITEM_PER_PAGE) {
+    return this._getList('get_chapters', { bookID, offset, limit })
+  }
+
+  getTotalChapters (bookID) {
+    return this._getOneWithPluck('get_total_chapter', { bookID })
   }
 
   insertChapter (chapterData) {
@@ -141,7 +157,7 @@ class AdminBookDB extends BaseDB {
   }
 
   deleteChapterByID (id) {
-    return this._run({ statementName: 'delete_chapter_by_id', params: { id }})
+    return this._run({ statementName: 'delete_chapter_by_id', params: { id } })
   }
 
   deleteBookChapterRelationship (book_id, chapter_id) {

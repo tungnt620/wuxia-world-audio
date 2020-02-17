@@ -6,17 +6,17 @@ const { ITEM_PER_PAGE } = require('../constants')
 
 const bookDB = new AdminBookDB(new Database(process.env.MY_AUDIO_DB_URL))
 
-async function getBooks (page = 1) {
+async function getChapters ({ page = 1, bookID }) {
   const offset = (page - 1) * ITEM_PER_PAGE
 
   try {
-    const books = bookDB.getBooks(offset)
-    const totalBook = bookDB.getTotalBooks()
+    const chapters = bookDB.getChapters(bookID, offset)
+    const totalChapter = bookDB.getTotalChapters(bookID)
 
     return getResponse({
       data: {
-        items: books,
-        total: totalBook
+        items: chapters,
+        total: totalChapter
       }
     })
   } catch (err) {
@@ -25,19 +25,19 @@ async function getBooks (page = 1) {
   }
 }
 
-async function getBook (id) {
+async function getChapter (id) {
   try {
-    const book = bookDB.getBookByID(id)
-    return getResponse({ data: book })
+    const chapter = bookDB.getChapterByID(id)
+    return getResponse({ data: chapter })
   } catch (err) {
     console.log(err)
     return getResponse({ code: API_CODE_ERROR, error: err.toString() })
   }
 }
 
-async function updateBook (id, newData) {
+async function updateChapter (id, newData) {
   try {
-    bookDB.updateTable('book', { id, ...newData })
+    bookDB.updateTable('chapter', { id, ...newData })
     return getResponse()
   } catch (err) {
     console.log(err)
@@ -46,7 +46,7 @@ async function updateBook (id, newData) {
 }
 
 module.exports = {
-  getBooks,
-  getBook,
-  updateBook,
+  getChapters,
+  getChapter,
+  updateChapter,
 }

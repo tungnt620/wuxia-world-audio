@@ -32,6 +32,16 @@ export default class ActionBase {
     }
   }
 
+  defaultOnRequestSuccessCallback = (dispatch, respData) => {
+    const { code, data, msg } = respData
+
+    if (code === API_SUCCESS) {
+      dispatch(this.success({ data }))
+    } else {
+      dispatch(this.fail({ error: msg }))
+    }
+  }
+
   makeAction = (
     {
       url,

@@ -4,11 +4,13 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import userReducer from 'store/user/reducers'
 import crawlReducer from 'store/crawl/reducer'
 import bookReducer from 'store/book/reducers'
+import chapterReducer from 'store/chapter/reducers'
 
 const rootReducer = combineReducers({
   user: userReducer,
   crawl: crawlReducer,
   book: bookReducer,
+  chapter: chapterReducer,
 })
 
 const middlewares = [thunk]

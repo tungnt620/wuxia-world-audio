@@ -6,6 +6,7 @@ import 'App.scss'
 import Loading from './components/common/Loading'
 import Home from './components/Home'
 import BookList from './components/Book/List'
+import ChapterList from './components/Chapter/List'
 
 class App extends Component {
   render () {
@@ -17,6 +18,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={Home}/>
             <Route path="/book/list" exact component={BookList}/>
+            <Route path="/chapter/list" exact component={ChapterList}/>
             <Route component={NotFound}/>
           </Switch>
         </Suspense>
