@@ -10,10 +10,10 @@ const env = process.env.NODE_ENV
 const pathPrefix = ''
 const environment = {
   development: {
-    API_BASE_URL: 'http://localhost:4000/',
+    API_BASE_URL: 'http://localhost:4002/',
   },
   production: {
-    API_BASE_URL: 'https://confession.vn/api/',
+    API_BASE_URL: 'https://confession.vn:4002/',
   },
 }[env]
 const nextConfiguration = {
