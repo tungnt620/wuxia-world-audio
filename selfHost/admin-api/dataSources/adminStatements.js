@@ -9,7 +9,7 @@ select *, (select count(*) from book_chapter where book_id=book.id) as total_cha
     select count(*) from chapter where id in ( select chapter_id from book_chapter where book_id=book.id)  and audio is not null
 ) as num_audio
  from book
- order by id desc limit $limit offset $offset
+ order by id asc limit $limit offset $offset
 `,
   'get_total_book': `select count(*) from book`,
   'insert_book': 'insert into book (name, slug, source, source_id, created_at, updated_at) values($name, $slug, $source, $source_id, $created_at, $updated_at)',

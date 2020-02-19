@@ -1,9 +1,9 @@
 const myAudioStatements = {
   // =============== BookV1 =======================
   'get_book_by_id_and_slug': 'select * from book where id=$id and slug=$slug',
-  'get_books': `select * from book order by id desc limit $limit offset $offset`,
+  'get_books': `select * from book where is_public=1 order by id desc limit $limit offset $offset`,
   'get_books_by_cat_id_and_cat_slug': `
-            select * from book where id in (
+            select * from book where is_public=1 and id in (
                 select book_id from book_cat 
                 where cat_id in ( select id from cat where id=$catID and slug=$catSlug )
                 order by book_id desc 
