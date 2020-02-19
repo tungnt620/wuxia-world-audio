@@ -5,7 +5,7 @@ import BookV1 from '../../book/V1'
 const V1 = (
   {
     title = 'Truyện hot',
-    icon = <i className="fa fa-fire"></i>,
+    icon = <i className="fa fa-fire"/>,
     options = [
       {
         value: 'all',
@@ -16,7 +16,9 @@ const V1 = (
         text: 'Tiên hiệp',
       }
     ],
-    books = [{}]
+    books = [{}],
+    hasMore = true,
+    fetchMore = () => {}
   }
 ) => {
 
@@ -52,7 +54,14 @@ const V1 = (
       </div>
 
       <div className={'load-more has-text-centered'}>
-        <button className="button is-dark">Tải thêm</button>
+        {
+          hasMore ? (
+            <button onClick={fetchMore} className="button is-dark">Tải thêm</button>
+          ) : (
+            <p>Không còn nữa!</p>
+          )
+        }
+
       </div>
 
       <style jsx>{styles}</style>

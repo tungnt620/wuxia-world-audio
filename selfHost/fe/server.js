@@ -27,12 +27,12 @@ app.prepare()
       return renderAndCache(req, res, '/home')
     })
 
-    server.get('/sach/:slug/', (req, res) => {
-      return renderAndCache(req, res, '/book', { slug: req.params.slug })
+    server.get('/sach/:IDAndSlug/', (req, res) => {
+      return renderAndCache(req, res, '/book', req.params)
     })
 
-    server.get('/the-loai/:slug/', (req, res) => {
-      return renderAndCache(req, res, '/cat', { slug: req.params.slug })
+    server.get('/the-loai/:IDAndSlug/', (req, res) => {
+      return renderAndCache(req, res, '/cat', req.params)
     })
 
     // server.get('/the-loai/:slug/', (req, res) => {

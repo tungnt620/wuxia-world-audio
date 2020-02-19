@@ -14,6 +14,8 @@ module.exports = {
       await dataSources.myAudio.getAuthorBySlug(IDAndSlug),
     authors: async (_, { offset = 0, limit = 10 }, { dataSources }) =>
       await dataSources.myAudio.getAuthors(offset, limit),
+    chapters: async (_, { bookIDAndSlug, offset = 0, limit = 10 }, { dataSources }) =>
+      await dataSources.myAudio.getChapters(bookIDAndSlug, offset, limit),
   },
   Book: {
     cats: async (book, _, { dataSources }) =>

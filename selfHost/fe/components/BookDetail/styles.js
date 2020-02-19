@@ -20,7 +20,7 @@ export default css`
         li {
           padding: 7px;
           cursor: pointer;
-          
+
           :not(:first-child) {
             border-top: 1px solid #8e5733;
           }

@@ -92,6 +92,17 @@ class BookDB extends BaseDB {
     return this._getList('get_authors', { limit, offset })
   }
 
+  async getChapters (bookIDAndSlug, offset, limit) {
+    const [id, slug] = getIDFromSlug(bookIDAndSlug)
+
+    const book = this._getOne('get_book_by_id_and_slug', { id, slug })
+    if (book) {
+      return this._getList('get_chapters_by_book_id', { bookID: id, limit, offset })
+    }
+
+    return []
+  }
+
   async getAuthorByBookID (bookID) {
     return this._getOne('get_author_by_book_id', { bookID })
   }

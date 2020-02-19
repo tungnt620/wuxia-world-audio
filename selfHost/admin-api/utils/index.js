@@ -10,5 +10,5 @@ exports.getIDFromSlug =(slug = '') => {
 }
 
 exports.getSlugFromString = (str = '') => {
-  return slugify(str.toLowerCase())
+  return slugify(str.substring(0, 50).toLowerCase())
 }

@@ -27,6 +27,11 @@ const typeDefs = gql`
             offset: Int
             limit: Int
         ): [Author]!
+        chapters(
+            bookIDAndSlug: String
+            offset: Int
+            limit: Int
+        ): [Chapter]!
     }
 
     type Book {
@@ -52,6 +57,7 @@ const typeDefs = gql`
     }
     type Chapter {
         id: Int
+        order_no: Int
         name: String
         slug: String
         text: String

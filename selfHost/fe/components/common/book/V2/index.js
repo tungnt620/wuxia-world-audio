@@ -3,8 +3,8 @@ import styles from './styles'
 
 const V2 = (
   {
-    isFull = true,
-    image = 'https://www.nae.vn/ttv/ttv/public/images/story/ecbd8cce7d61e08f0c64c7f4cbc1fbb7bb34735c7437147f2a1d0ca02801af69.jpg',
+    is_full = true,
+    img = 'https://www.nae.vn/ttv/ttv/public/images/story/ecbd8cce7d61e08f0c64c7f4cbc1fbb7bb34735c7437147f2a1d0ca02801af69.jpg',
     name = 'Linh vũ thiện hạ nguyen thanh tung',
     chapterUrl,
     url,
@@ -17,12 +17,12 @@ const V2 = (
         <a href={url} itemProp={'url'} title={name}>
           <figure className="image is-3by4">
             <img
-              src={image}
+              src={img}
               alt={name}
               itemProp={'image'}
             />
           </figure>
-          {isFull ? <span className="full-label"/> : null}
+          {is_full ? <span className="full-label"/> : null}
         </a>
       </div>
       <div className="card-content">
@@ -36,7 +36,7 @@ const V2 = (
           href={chapterUrl}
           title={`${name} - chương ${chapterNo}`}
         >
-          {`${isFull ? 'Full - ' : ''} C ${chapterNo}`}
+          {`${is_full ? 'Full - ' : ''} C ${chapterNo}`}
         </a>
       </footer>
       <style jsx>{styles}</style>

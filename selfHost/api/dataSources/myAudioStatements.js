@@ -71,7 +71,7 @@ const myAudioStatements = {
                     where book_id=$bookID
                     limit $limit offset $offset
                 )
-                order by no asc
+                order by order_no asc
   `,
   'get_total_chapter_by_book_id': `
                 select count(*) from book_chapter 
