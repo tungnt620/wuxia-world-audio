@@ -12,18 +12,19 @@ const myAudioStatements = {
   'get_relative_books_by_book_id': `
                 SELECT * 
                 FROM book
+                where is_public=1
                 LIMIT $limit 
                 OFFSET ABS(RANDOM()) % MAX((SELECT COUNT(*) FROM book), 1)
     `,
   'get_books_by_cat_id': `
-            select * from book where id in (
+            select * from book where is_pubic=1 and id in (
                 select book_id from book_cat 
                 where cat_id=$catID
                 order by book_id desc 
                 limit $limit offset $offset
             )`,
   'get_books_by_author_id': `
-            select * from book where id in (
+            select * from book where is_public=1 and id in (
                 select book_id from book_author 
                 where author_id=$authorID
                 order by book_id desc 
@@ -36,6 +37,7 @@ const myAudioStatements = {
             FROM book_search WHERE book_search MATCH $matchExpressions ORDER BY rank limit $limit OFFSET $offset
           ) bs
           inner join book b on bs.rowid = b.id
+          where b.is_public=1
         `,
   'get_total_book_by_cat_id': `
                 select count(*) from book_cat 
