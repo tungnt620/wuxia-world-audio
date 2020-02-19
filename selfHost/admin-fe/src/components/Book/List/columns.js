@@ -76,7 +76,7 @@ export default [
           <MarkPublicBtn record={record}/>
           <CrawlTTVBookBtn record={record}/>
           <CrawlTTVChaptersBtn record={record}/>
-          <Button><a href={`/chapter/list/?bookID=${record.id}`}>View chapters</a></Button>
+          <Button><a href={`/#/chapter/list/?bookID=${record.id}`}>View chapters</a></Button>
         </Button.Group>
       )
     }
