@@ -13,7 +13,7 @@ const environment = {
     API_BASE_URL: 'http://localhost:4002/',
   },
   production: {
-    API_BASE_URL: 'https://confession.vn:4002/',
+    API_BASE_URL: 'http://confession.vn:4002/',
   },
 }[env]
 const nextConfiguration = {
