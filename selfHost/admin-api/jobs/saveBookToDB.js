@@ -39,7 +39,7 @@ async function saveBookToDB () {
 
           const { author: authorName, cats: catNames, ...newBookData } = bookData
 
-          bookDB.updateBook(newBookData)
+          bookDB.updateTable('book', newBookData)
           const book = bookDB.getBookByID(newBookData.id)
 
           const author = bookDB.getOrCreateAuthor(authorName)
