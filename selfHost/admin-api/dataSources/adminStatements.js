@@ -3,14 +3,6 @@ const adminStatements = {
   'save_key_value': 'replace into key_value(key, value) values($key, $value)',
   'get_book_by_id': 'select * from book where id=$id',
   'get_book': 'select * from book where source=$source and source_id=$source_id',
-  'get_books': `
-select *, (select count(*) from book_chapter where book_id=book.id) as total_chapter,
-(
-    select count(*) from chapter where id in ( select chapter_id from book_chapter where book_id=book.id)  and audio is not null
-) as num_audio
- from book
- order by id asc limit $limit offset $offset
-`,
   'get_total_book': `select count(*) from book`,
   'insert_book': 'insert into book (name, slug, source, source_id, created_at, updated_at) values($name, $slug, $source, $source_id, $created_at, $updated_at)',
   'insert_author': 'insert into author (name, slug, created_at, updated_at) values($name, $slug, $created_at, $updated_at)',

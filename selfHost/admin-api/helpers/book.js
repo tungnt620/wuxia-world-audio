@@ -6,11 +6,19 @@ const { ITEM_PER_PAGE } = require('../constants')
 
 const bookDB = new AdminBookDB(new Database(process.env.MY_AUDIO_DB_URL))
 
-async function getBooks (page = 1) {
+async function getBooks ({ page = 1, sorter = '{}', filter = '{}'}) {
   const offset = (page - 1) * ITEM_PER_PAGE
 
+  filter = JSON.parse(filter)
+  sorter = JSON.parse(sorter)
+
   try {
-    const books = bookDB.getBooks(offset)
+    const books = bookDB.getBooks({
+      offset,
+      nameSearchText: filter.name,
+      sortBy: sorter.field,
+      sortOrder: sorter.order === 'ascend' ? 'asc' : 'desc'
+    })
     const totalBook = bookDB.getTotalBooks()
 
     return getResponse({

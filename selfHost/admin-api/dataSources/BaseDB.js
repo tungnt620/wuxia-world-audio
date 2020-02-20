@@ -23,8 +23,11 @@ class BaseDB {
     this.context = config.context
   }
 
-  _getList (statementName, params) {
+  _getList (statementName, params, statement) {
     // return [] array if no data. if error raise Error exception
+    if (statement) {
+      return this.db.prepare(statement).all(params || {})
+    }
     return this.db.prepare(this.statements[statementName]).all(params || {})
   }
 

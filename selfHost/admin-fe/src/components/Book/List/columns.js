@@ -11,6 +11,7 @@ export default [
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
+    sorter: true,
   },
   {
     title: 'Name',
@@ -43,6 +44,7 @@ export default [
     title: 'Is public',
     dataIndex: 'is_public',
     key: 'is_public',
+    sorter: true,
   },
   {
     title: 'Total chapter',
@@ -58,6 +60,7 @@ export default [
     title: 'Updated at',
     dataIndex: 'updated_at',
     key: 'updated_at',
+    sorter: true,
     render: (text) => moment(text).format(ISO_DATE_TIME_FORMAT)
   },
   {

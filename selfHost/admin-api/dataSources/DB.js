@@ -47,8 +47,41 @@ class AdminBookDB extends BaseDB {
     return this._getOne('get_book_by_id', { id })
   }
 
-  getBooks (offset, limit = ITEM_PER_PAGE) {
-    return this._getList('get_books', { offset, limit })
+  getBooks ({ offset, limit = ITEM_PER_PAGE, sortBy = 'id', sortOrder = 'desc', nameSearchText = '' }) {
+    if (nameSearchText) {
+      const words = nameSearchText.split(' ')
+      let matchExpressions = `${nameSearchText}`
+      let temp = words[0]
+      for (let i = 1; i < words.length; i++) {
+        temp += ` ${words[i]}`
+        matchExpressions += ` OR "${temp}"`
+      }
+
+      const statement = `
+        select b.*, (select count(*) from book_chapter where book_id=b.id) as total_chapter,
+        (
+          select count(*) from chapter where id in ( select chapter_id from book_chapter where book_id=b.id)  and audio is not null
+        ) as num_audio 
+        from 
+          (
+            SELECT rowid
+            FROM book_search WHERE book_search MATCH $matchExpressions ORDER BY rank limit $limit OFFSET $offset
+          ) bs
+        inner join book b on bs.rowid = b.id
+      `
+      return this._getList(undefined, { offset, limit, matchExpressions }, statement)
+    } else {
+      const statement = `
+        select *, (select count(*) from book_chapter where book_id=book.id) as total_chapter,
+        (
+            select count(*) from chapter where id in ( select chapter_id from book_chapter where book_id=book.id)  and audio is not null
+        ) as num_audio
+        from book
+        order by ${sortBy} ${sortOrder} limit $limit offset $offset
+       `
+
+      return this._getList(undefined, { offset, limit }, statement)
+    }
   }
 
   getTotalBooks () {

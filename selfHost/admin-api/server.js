@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
 app.get('/api/book', async function (req, res) {
-  const resp = await getBooks(req.query.page)
+  const resp = await getBooks(req.query)
   await res.json(resp)
 })
 
