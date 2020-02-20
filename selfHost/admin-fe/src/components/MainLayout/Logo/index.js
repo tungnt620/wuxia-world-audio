@@ -6,7 +6,7 @@ import './styles.scss'
 
 const Logo = ({ isCollapsed }) => (
   <div className="logo">
-    {isCollapsed ? <img src={logo2} alt="logo-shopee" /> : <img src={logo} alt="logo-shopee" />}
+    {isCollapsed ? <img alt="logo-shopee" /> : <img alt="logo-shopee" />}
   </div>
 )
 

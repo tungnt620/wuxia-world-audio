@@ -16,7 +16,7 @@ const MainLayout = ({ children }) => {
       <Layout>
         <Header/>
         <Content className="main-content">{children}</Content>
-        <Footer className="footer">Shopee Affiliate Admin ©2020</Footer>
+        <Footer className="footer">My Audio Admin ©2020</Footer>
       </Layout>
     </Layout>
   )
