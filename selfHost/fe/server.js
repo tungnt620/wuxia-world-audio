@@ -66,7 +66,8 @@ function getCacheKey (req) {
 }
 
 async function renderAndCache (req, res, path, query) {
-  if (dev) {
+  // TODO: current we don't cache
+  if (dev || true) {
     const html = await app.renderToHTML(req, res, path, query)
 
     // Something is wrong with the request, let's skip the cache

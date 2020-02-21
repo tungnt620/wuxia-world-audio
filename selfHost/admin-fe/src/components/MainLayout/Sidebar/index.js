@@ -6,7 +6,7 @@ import Logo from 'components/MainLayout/Logo'
 const { Sider } = Layout
 
 const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(true)
 
   const collapseHandler = collapsed => {
     setCollapsed(collapsed)

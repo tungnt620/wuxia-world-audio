@@ -2,6 +2,7 @@ const { createHttpTerminator } = require('http-terminator');
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const { crawlAllBook } = require('./helpers/crawl')
 const { convertBookAudio } = require('./helpers/audio')
 const { convertChapterAudio } = require('./helpers/audio')
 const { updateChapter } = require('./helpers/chapter')
@@ -63,6 +64,11 @@ app.post('/api/chapter/:id', async function (req, res) {
 
 app.post('/api/crawl/:crawlType', async function (req, res) {
   const resp = await crawl(req.params.crawlType, req.body)
+  await res.json(resp)
+})
+
+app.post('/api/crawl_all_book', async function (req, res) {
+  const resp = await crawlAllBook()
   await res.json(resp)
 })
 

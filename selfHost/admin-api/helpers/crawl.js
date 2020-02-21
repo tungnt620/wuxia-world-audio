@@ -11,6 +11,7 @@ const { REDIS_STREAM_KEY_NEW_BOOKS } = require('../constants')
 const db = new Database(process.env.DB_URL)
 
 const adminBookDB = new AdminBookDB(db)
+const bookDB = new AdminBookDB(new Database(process.env.MY_AUDIO_DB_URL))
 
 function getCrawlJobIDKeyInDB (crawlType, params) {
   switch (crawlType) {
@@ -98,7 +99,44 @@ async function crawl (crawlType, reqBody) {
   }
 }
 
+async function crawlAllBook () {
+  try {
+    const books = bookDB.getBooks({ limit: 1000000 })
+    for (const book of books) {
+      const body = {
+        project: 'default',
+        spider: 'ttv_book',
+        redis_stream_name: getRedisStreamName('ttv_book'),
+        id: book.id,
+        book_url: `https://truyen.tangthuvien.vn/doc-truyen/${book.source_id}`
+      }
+
+      const params = new URLSearchParams()
+      Object.keys(body).forEach((key) => {
+        params.append(key, body[key])
+      })
+      const resp = await fetch(process.env.CRAWL_SERVICE_URL + '/schedule.json', {
+          method: 'POST',
+          body: params
+        }
+      )
+
+      const data = await resp.json()
+      if (data.status === 'ok') {
+        const jobID = data.jobid
+        adminBookDB.saveKeyValue(getCrawlJobIDKeyInDB('ttv_book', { id: book.id }), jobID)
+      }
+    }
+
+    return getResponse()
+  } catch (err) {
+    console.log(err)
+    return getResponse({ code: API_CODE_ERROR, error: err.toString() })
+  }
+}
+
 module.exports = {
   getStatusCrawl,
   crawl,
+  crawlAllBook,
 }

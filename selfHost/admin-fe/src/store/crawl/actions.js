@@ -105,3 +105,15 @@ export const getStatusCrawlChapterTTVStatus = (params, successCallback) => {
     }
   })
 }
+
+const crawlAllBookDetailTTVAction = new ActionBase(actionTypes.CRAWl_ALL_BOOK_DETAIL_TTV)
+
+export const resetCrawlAllBookDetailTTV = () => crawlAllBookDetailTTVAction.reset()
+
+export const crawlAllBookDetailTTV = (params) => {
+  return crawlAllBookDetailTTVAction.makeAction({
+    url: '/api/crawl_all_book',
+    method: 'post',
+    requestData: params,
+  })
+}

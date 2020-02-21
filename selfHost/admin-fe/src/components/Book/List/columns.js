@@ -11,17 +11,25 @@ export default [
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
+    width: '80px',
     sorter: true,
   },
   {
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+  },
+  {
+    title: 'Links',
+    dataIndex: '_1',
+    key: '_1',
     render: (text, record) => {
       return (
-        <Tooltip title={record.desc}>
-          {text}
-        </Tooltip>
+        <>
+          <a target={'_blank'} href={`https://truyen.tangthuvien.vn/doc-truyen/${record.source_id}/`}>Source link</a>
+          <br/>
+          <a target={'_blank'} href={`http://confession.vn:3004/sach/${record.id}-${record.slug}`}>link</a>
+        </>
       )
     }
   },
@@ -36,18 +44,13 @@ export default [
     }
   },
   {
-    title: 'Slug',
-    dataIndex: 'slug',
-    key: 'slug',
-  },
-  {
-    title: 'Is public',
+    title: 'Public',
     dataIndex: 'is_public',
     key: 'is_public',
     sorter: true,
   },
   {
-    title: 'Total chapter',
+    title: 'Num chapter',
     dataIndex: 'total_chapter',
     key: 'total_chapter',
   },
@@ -57,29 +60,55 @@ export default [
     key: 'num_audio',
   },
   {
-    title: 'Updated at',
-    dataIndex: 'updated_at',
-    key: 'updated_at',
+    title: 'Source view',
+    dataIndex: 'source_view',
+    key: 'source_view',
     sorter: true,
-    render: (text) => moment(text).format(ISO_DATE_TIME_FORMAT)
   },
   {
-    title: 'Created at',
-    dataIndex: 'created_at',
-    key: 'created_at',
+    title: 'Source like',
+    dataIndex: 'source_like',
+    key: 'source_like',
+    sorter: true,
+  },
+  {
+    title: 'Source follow',
+    dataIndex: 'source_follow',
+    key: 'source_follow',
+    sorter: true,
+  },
+  {
+    title: 'Source total chapter',
+    dataIndex: 'source_total_chapter',
+    key: 'source_total_chapter',
+    sorter: true,
+  },
+  {
+    title: 'Is full',
+    dataIndex: 'is_full',
+    key: 'is_full',
+    sorter: true,
+  },
+  {
+    title: 'Source last updated',
+    dataIndex: 'source_last_update',
+    key: 'source_last_update',
+    sorter: true,
     render: (text) => moment(text).format(ISO_DATE_TIME_FORMAT)
   },
   {
     title: 'Actions',
     dataIndex: '',
     key: 'actions',
+    fixed: 'right',
+    width: '150px',
     render: (text, record) => {
       return (
         <Button.Group>
-          <MarkPublicBtn record={record}/>
           <CrawlTTVBookBtn record={record}/>
           <CrawlTTVChaptersBtn record={record}/>
           <Button><a href={`/#/chapter/list/?bookID=${record.id}`}>View chapters</a></Button>
+          <MarkPublicBtn record={record}/>
         </Button.Group>
       )
     }

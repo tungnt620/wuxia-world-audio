@@ -25,7 +25,7 @@ const MarkPublicBtn = ({ record }) => {
         onClick={onClick}
         loading={loading}
       >
-        { record.is_public ? 'Un-public' : 'Public' }
+        { record.is_public ? 'Mark un-public' : 'Mark public' }
       </Button>
     </>
   )

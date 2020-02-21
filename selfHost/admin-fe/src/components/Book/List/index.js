@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Typography, Table, Input } from 'antd'
+import { Typography, Table, Input, Button } from 'antd'
 import { getListBook } from '../../../store/book/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import columns from './columns'
 import { ITEM_PER_PAGE } from '../../../shared/constants'
 import './style.scss'
 import { useDebounce } from '../../../shared/hooks'
+import { crawlAllBookDetailTTV } from '../../../store/crawl/actions'
 
 const { Title } = Typography
 const { Search } = Input
@@ -13,6 +14,7 @@ const { Search } = Input
 const List = () => {
   const dispatch = useDispatch()
   const bookListReducer = useSelector(state => state.book.list)
+  const crawlAllBookDetailTTVReducer = useSelector(state => state.crawl.crawlAllBookDetailTTV)
 
   const [searchText, setSearchText] = useState('')
   const debouncedSearchText = useDebounce(searchText, 400)
@@ -35,6 +37,14 @@ const List = () => {
   return (
     <div className={'book-list'}>
       <Title level={4}>Books</Title>
+      <div className={'mass-action-on-all-data'}>
+        <Button
+          loading={crawlAllBookDetailTTVReducer.loading}
+          onClick={() => dispatch(crawlAllBookDetailTTV())}
+        >
+          Crawl all book info
+        </Button>
+      </div>
       <Search
         className={'search-box'}
         placeholder="Search by book name"
@@ -54,6 +64,11 @@ const List = () => {
           pageSize: ITEM_PER_PAGE,
           total: bookListReducer.data?.total,
           size: 'normal',
+        }}
+        scroll={{
+          y: window.innerHeight - 100,
+          x: 1500,
+          scrollToFirstRowOnChange: true,
         }}
       />
     </div>

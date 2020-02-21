@@ -14,7 +14,13 @@ CREATE TABLE IF NOT EXISTS "book" (
 	"view" integer not null default 0,
 	"source"        text,
 	"source_id"     text,
+	"source_view"   integer default 0,
+	"source_like"   integer default 0,
+	"source_follow"   integer default 0,
+	"source_last_update"    text,
+	"source_total_chapter"  integer default 0,
 	"is_public"     integer default 0,
+	"is_crawl_failed"   integer default 0,
 	"created_at"	text,
 	"updated_at"	text,
 	UNIQUE(source, source_id)

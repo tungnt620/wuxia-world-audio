@@ -47,7 +47,7 @@ class AdminBookDB extends BaseDB {
     return this._getOne('get_book_by_id', { id })
   }
 
-  getBooks ({ offset, limit = ITEM_PER_PAGE, sortBy = 'id', sortOrder = 'desc', nameSearchText = '' }) {
+  getBooks ({ offset = 0, limit = ITEM_PER_PAGE, sortBy = 'id', sortOrder = 'desc', nameSearchText = '' }) {
     if (nameSearchText) {
       const words = nameSearchText.split(' ')
       let matchExpressions = `${nameSearchText}`
