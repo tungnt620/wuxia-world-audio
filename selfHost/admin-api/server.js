@@ -23,7 +23,7 @@ const app = express()
 const port = 4001
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://confession.vn:3005'],
+  origin: ['http://localhost:3000', 'audiocuatui.com'],
   credentials: true,
 }
 app.use(cors(corsOptions))

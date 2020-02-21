@@ -8,7 +8,6 @@ yarn.lock
 .idea/
 node_modules
 .env.yaml
-.env
 ecosystem.config.js
 server/_fullstack-tutorial-master
 package-lock.json
