@@ -5,7 +5,7 @@ import CrawlTTVBookBtn from './components/CrawlTTVBookBtn'
 import moment from 'moment'
 import { ISO_DATE_TIME_FORMAT } from '../../../shared/constants'
 import CrawlTTVChaptersBtn from './components/CrawlTTVChaptersBtn'
-import { useHistory } from 'react-router-dom'
+import ViewChaptersBtn from './components/ViewChaptersBtn'
 
 export default [
   {
@@ -104,13 +104,11 @@ export default [
     fixed: 'right',
     width: '150px',
     render: (text, record) => {
-      const history = useHistory()
-
       return (
         <Button.Group>
           <CrawlTTVBookBtn record={record}/>
           <CrawlTTVChaptersBtn record={record}/>
-          <Button onClick={() => history.push(`/chapter/list/?bookID=${record.id}`)}>View chapters</Button>
+          <ViewChaptersBtn record={record} />
           <MarkPublicBtn record={record}/>
         </Button.Group>
       )
