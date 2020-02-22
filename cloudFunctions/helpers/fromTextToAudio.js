@@ -29,7 +29,7 @@ const fromTextToAudio = (textContent, callbackOnError, callbackOnSuccess) => {
       fs.mkdirSync(workingDir)
 
       // Just few 5000 character because after that we need add some tag for SSML
-      const chunkTextContent = chunkText(textContent, 4000)
+      const chunkTextContent = chunkText(textContent, 3000)
 
       async.map(chunkTextContent, getTtsAudio, (err, audio) => {
         if (err) {
@@ -119,6 +119,7 @@ function createGcsObject (audioPath, cb) {
   const objectOptions = {
     destination: fileName,
     public: true,
+    resumable: false,
     metadata: {
       contentType: 'audio/mpeg',
     }

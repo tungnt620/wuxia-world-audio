@@ -3,6 +3,7 @@ import { Button } from 'antd'
 import moment from 'moment'
 import { ISO_DATE_TIME_FORMAT } from '../../../shared/constants'
 import ConvertAudioBtn from './components/ConvertAudioBtn'
+import ShowContentBtn from './components/ShowContentBtn'
 
 export default [
   {
@@ -56,6 +57,7 @@ export default [
       return (
         <Button.Group>
           <ConvertAudioBtn record={record} />
+          <ShowContentBtn record={record} />
         </Button.Group>
       )
     }

@@ -1,10 +1,11 @@
 import MarkPublicBtn from './components/MarkPublicBtn'
 import React from 'react'
-import { Avatar, Button, Tooltip } from 'antd'
+import { Avatar, Button } from 'antd'
 import CrawlTTVBookBtn from './components/CrawlTTVBookBtn'
 import moment from 'moment'
 import { ISO_DATE_TIME_FORMAT } from '../../../shared/constants'
 import CrawlTTVChaptersBtn from './components/CrawlTTVChaptersBtn'
+import { useHistory } from 'react-router-dom'
 
 export default [
   {
@@ -28,7 +29,7 @@ export default [
         <>
           <a target={'_blank'} href={`https://truyen.tangthuvien.vn/doc-truyen/${record.source_id}/`}>Source link</a>
           <br/>
-          <a target={'_blank'} href={`http://confession.vn:3004/sach/${record.id}-${record.slug}`}>link</a>
+          <a target={'_blank'} href={`https://audiocuatui.com/sach/${record.id}-${record.slug}`}>link</a>
         </>
       )
     }
@@ -39,7 +40,7 @@ export default [
     key: 'img',
     render: (text, record) => {
       return (
-        <Avatar shape="square" size={64} src={text} />
+        <Avatar shape="square" size={64} src={text}/>
       )
     }
   },
@@ -103,11 +104,13 @@ export default [
     fixed: 'right',
     width: '150px',
     render: (text, record) => {
+      const history = useHistory()
+
       return (
         <Button.Group>
           <CrawlTTVBookBtn record={record}/>
           <CrawlTTVChaptersBtn record={record}/>
-          <Button><a href={`/#/chapter/list/?bookID=${record.id}`}>View chapters</a></Button>
+          <Button onClick={() => history.push(`/chapter/list/?bookID=${record.id}`)}>View chapters</Button>
           <MarkPublicBtn record={record}/>
         </Button.Group>
       )

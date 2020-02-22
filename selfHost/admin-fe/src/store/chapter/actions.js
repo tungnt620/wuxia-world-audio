@@ -41,11 +41,11 @@ export const updateChapter = (id, params, callback) => {
   })
 }
 
-export const convertAudioChapter = (id, callback) => {
+export const convertAudioChapter = ({ id, bookID,  callback }) => {
   return detailAction.makeAction({
     url: `/api/convert-audio`,
     method: 'post',
-    requestData: { ids: [id] },
+    requestData: { ids: [id], bookID },
     onRequestSuccessCallback: (dispatch, respData) => {
       detailAction.defaultOnRequestSuccessCallback(dispatch, respData)
 

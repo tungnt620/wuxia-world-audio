@@ -8,9 +8,9 @@ const bookDB = new AdminBookDB(new Database(process.env.MY_AUDIO_DB_URL))
 
 async function convertAudioOfChapters (chapters) {
   for (const chapter of chapters) {
-    const text = chapter.text
+    const { text, audio } = chapter
 
-    if (text) {
+    if (text && !audio) {
       const resp = await fetch(process.env.TEXT_TO_AUDIO_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -19,6 +19,8 @@ async function convertAudioOfChapters (chapters) {
         })
       })
       const audioFileName = await resp.text()
+      console.log(`convert audio resp: ${audioFileName}`)
+
       if (audioFileName && audioFileName.endsWith('mp3')) {
         const audioLink = `https://storage.googleapis.com/book-audio/${audioFileName}`
         bookDB.updateTable('chapter', { id: chapter.id, audio: audioLink })

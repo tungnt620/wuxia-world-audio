@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { LOCALSTORAGE_PREFIX } from './shared/constants'
 
-const timeout = process.env.REACT_APP_ENV === 'production' || process.env.REACT_APP_ENV === 'uat' ? 86400000 : 600000
+const timeout = 86400000
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,

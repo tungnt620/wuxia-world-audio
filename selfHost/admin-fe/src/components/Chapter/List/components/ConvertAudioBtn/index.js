@@ -9,10 +9,10 @@ const ConvertAudioBtn = ({ record }) => {
 
   const onClick = () => {
     setLoading(true)
-    dispatch(convertAudioChapter(
-      record.id,
-      () => setLoading(false)
-      )
+    dispatch(convertAudioChapter({
+        id: record.id,
+        callback: () => setLoading(false)
+      })
     )
   }
 
