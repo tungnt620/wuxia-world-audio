@@ -6,22 +6,16 @@ const ShowContentBtn = ({ record }) => {
 
   return (
     <>
-      <Button
-        onClick={() => setShowChapterText(true)}
-      >
-        View text
-      </Button>
+      <Button onClick={() => setShowChapterText(true)}>View text</Button>
 
       <Modal
-        title="Basic Modal"
+        title="Chapter content"
         width={'90%'}
         visible={showChapterText}
         onOk={() => setShowChapterText(false)}
         onCancel={() => setShowChapterText(false)}
       >
-        <div style={{ whiteSpace: 'pre-line'}}>
-          {record.text}
-        </div>
+        <div style={{ whiteSpace: 'pre-line' }}>{record.text}</div>
       </Modal>
     </>
   )

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Icon, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
+import { BookOutlined, DashboardOutlined } from '@ant-design/icons'
 
 const { Item } = Menu
 
@@ -11,13 +12,13 @@ const Navigation = () => {
     <Menu theme="dark" mode="vertical" defaultSelectedKeys={['home']} selectedKeys={[pathname]}>
       <Item key="/">
         <Link to="/">
-          <Icon type="dashboard"/>
+          <DashboardOutlined />
           <span className="nav-text">Dashboard</span>
         </Link>
       </Item>
       <Item key="/book/list">
         <Link to="/book/list">
-          <Icon type="book"/>
+          <BookOutlined />
           <span className="nav-text">Book</span>
         </Link>
       </Item>

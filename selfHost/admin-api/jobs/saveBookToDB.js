@@ -1,66 +1,83 @@
-const { AdminBookDB } = require('../dataSources/DB')
-const Database = require('better-sqlite3')
-const redis = require('redis')
-const { LAST_ID_BOOK_STREAM_KEY } = require('../constants')
-const { REDIS_STREAM_KEY_BOOK } = require('../constants')
-const client = redis.createClient({
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-  password: process.env.REDIS_PASSWORD,
-})
+const { crawl } = require("../helpers/crawl");
+const { CRAWL_TYPE_CHAPTER } = require("../constants");
 
-const adminBookDB = new AdminBookDB(new Database(process.env.DB_URL))
-const bookDB = new AdminBookDB(new Database(process.env.MY_AUDIO_DB_URL))
+const { AdminBookDB } = require("../dataSources/DB");
+const { redisClient } = require("../utils");
+const Database = require("better-sqlite3");
+const { LAST_ID_BOOK_STREAM_KEY } = require("../constants");
+const { REDIS_STREAM_KEY_BOOK } = require("../constants");
 
-let isProcessShutDown = false
-module.exports.isProcessShutDown = isProcessShutDown
+const adminBookDB = new AdminBookDB(new Database(process.env.DB_URL));
+const bookDB = new AdminBookDB(new Database(process.env.CORE_DB_URL));
 
-client.on('error', function (error) {
-  console.error(error)
-})
+let isProcessShutDown = false;
+module.exports.isProcessShutDown = isProcessShutDown;
 
-async function saveBookToDB () {
-  let lastID = await adminBookDB.getValueFromKey(LAST_ID_BOOK_STREAM_KEY)
-  console.log('last id in stream is: ', lastID)
-  if (!lastID) lastID = '$'
+redisClient.on("error", function(error) {
+  console.error(error);
+});
 
-  client.send_command(
-    'XREAD',
-    ['BLOCK', 0, 'STREAMS', REDIS_STREAM_KEY_BOOK, lastID],
+async function saveBookToDB() {
+  let lastID = await adminBookDB.getValueFromKey(LAST_ID_BOOK_STREAM_KEY);
+  console.log("last id in stream is: ", lastID);
+  if (!lastID) lastID = "$";
+
+  redisClient.send_command(
+    "XREAD",
+    ["BLOCK", 0, "STREAMS", REDIS_STREAM_KEY_BOOK, lastID],
     async (err, data) => {
       if (!err) {
         try {
-          console.log('Get data from stream: ')
+          console.log("Get data from stream: ");
 
-          lastID = data[0][1][0][0]
+          lastID = data[0][1][0][0];
 
-          await adminBookDB.saveKeyValue(LAST_ID_BOOK_STREAM_KEY, lastID)
-          const bookData = JSON.parse(data[0][1][0][1][1])
+          await adminBookDB.saveKeyValue(LAST_ID_BOOK_STREAM_KEY, lastID);
+          const bookData = JSON.parse(data[0][1][0][1][1]);
 
-          const { author: authorName, cats: catNames, ...newBookData } = bookData
+          // const oldBookData = bookDB.getBookByID(bookData.id);
 
-          bookDB.updateTable('book', newBookData)
-          const book = bookDB.getBookByID(newBookData.id)
+          const {
+            author: authorName,
+            cats: catNames,
+            ...newBookData
+          } = bookData;
 
-          const author = bookDB.getOrCreateAuthor(authorName)
-          bookDB.insertIfNotExistBookAuthor(book.id, author.id)
+          bookDB.updateTable("book", newBookData);
+          const book = bookDB.getBookByID(newBookData.id);
 
-          JSON.parse(catNames).forEach((catName) => {
-            const cat = bookDB.getOrCreateCat(catName)
-            bookDB.insertIfNotExistBookCat(book.id, cat.id)
-          })
+          const author = bookDB.getOrCreateAuthor(authorName);
+          bookDB.insertIfNotExistBookAuthor(book.id, author.id);
 
-          console.log('save data success')
+          // let { chapter_urls: oldChapterUrls = "[]" } = oldBookData;
+          // let { chapter_urls: newChapterUrls = "[]" } = newBookData;
+          // oldChapterUrls = JSON.parse(oldChapterUrls);
+          // newChapterUrls = JSON.parse(newChapterUrls);
+          // if (oldChapterUrls.length !== newChapterUrls.length) {
+          //   for (
+          //     let i = oldChapterUrls.length;
+          //     i < newChapterUrls.length;
+          //     ++i
+          //   ) {
+          //     const chapter_url = `https://www.wuxiaworld.com${newChapterUrls[i]}`;
+          //     await crawl(CRAWL_TYPE_CHAPTER, {
+          //       chapter_url,
+          //       book_id: oldBookData.id
+          //     });
+          //   }
+          // }
+
+          console.log("save data success");
         } catch (err) {
-          console.log(err)
+          console.log(err);
         }
 
         if (!isProcessShutDown) {
-          await saveBookToDB()
+          await saveBookToDB();
         }
       }
     }
-  )
+  );
 }
 
-module.exports = saveBookToDB
+module.exports = saveBookToDB;

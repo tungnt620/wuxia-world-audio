@@ -1,23 +1,21 @@
-function makeSSMLForBookContent (content) {
-  let newContent = content.trim()
-  newContent = newContent.replace(/&/g, '&amp;')
-  newContent = newContent.replace(/"/g, '')
-  newContent = newContent.replace(/</g, '&lt;')
-  newContent = newContent.replace(/>/g, '&gt;')
-  newContent = newContent.replace(/[\*\[\]~]/g, '')
+function makeSSMLForBookContent(content) {
+  let newContent = content.trim();
+  newContent = newContent.replace(
+    /{{pause_some_second}}/g,
+    `<break time="2s"/>`
+  );
 
-  newContent = newContent.replace(/[\.\?!:-]*([^\r\n\.\?!:-]+)[\.\?!:-]*/gm, '<s>$1</s>')
-  newContent = newContent.replace(/[\r\n]*([^\r\n]+)[\r\n]*/gm, '<p>$1</p>')
-  newContent = `<speak>${newContent}</speak>`
+  newContent = newContent.replace(/…/g, `<break time="1s"/>`);
+  newContent = newContent.replace(/\.\.\./g, `<break time="1s"/>`);
 
-  return newContent
+  newContent = `<speak>${newContent}</speak>`;
+
+  return newContent;
 }
 
-function normalizeBookName (bookName) {
-
-}
+function normalizeBookName(bookName) {}
 
 module.exports = {
   makeSSMLForBookContent,
   normalizeBookName
-}
+};

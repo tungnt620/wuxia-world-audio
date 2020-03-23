@@ -1,15 +1,20 @@
-const { fromTextToAudio } = require('./fromTextToAudio')
+const { fromTextToAudio } = require("./fromTextToAudio");
+const { makeSSMLForBookContent } = require("./makeSSMLForBook");
 
+let testContent = `
+ WDQK Chapter 1: Lin Dong. “Wuu.”. When Lin Dong gathered every ounce of strength to open his heavy eyelids, a simple, crude yet tidy room appeared before his eyes.
+ {{pause_some_second}}
+ …
+...
 
-let testContent =
-  `
-Nghĩ đến đây, hắn bấm ‘Đồng ý’. Nghĩ đến đây, hắn bấm
-- Là bạn cùng lớp à?
-Tin thông báo vang lên liên tục, Tống Thư Hàng vốn còn định tắt thông  báo để còn nói mấy câu với nhóm —— Bây giờ hắn đang buồn ngủ chết đi  được, làm gì còn hơi sức đâu mà xem xem mình bị thêm vào nhóm nào?
+crude yet tidy room appeared before his eyes. 
+`;
 
-`
+console.log(makeSSMLForBookContent(testContent));
 
-fromTextToAudio(testContent,
-  (errorStr) => console.log(errorStr),
-  (successStr, mediaLink) => console.log(successStr, mediaLink)
-)
+//
+// fromTextToAudio(
+//   testContent,
+//   errorStr => console.log(errorStr),
+//   (successStr, mediaLink) => console.log(successStr, mediaLink)
+// );

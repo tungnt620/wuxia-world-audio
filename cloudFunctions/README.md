@@ -6,12 +6,12 @@ export GOOGLE_APPLICATION_CREDENTIALS="/Users/nguyentung/Downloads/google-cloud-
 ```
 
 * Update role who can call function:
-    - ```gcloud alpha functions add-iam-policy-binding bookRawDataGCSTrigger --region=asia-east2 --member=allUsers --role=roles/cloudfunctions.invoker```
+`gcloud alpha functions add-iam-policy-binding convertTextToAudio --region=us-central1 --member=allUsers --role=roles/cloudfunctions.invoker`
 
 ## text to speech endpoint
 ```
 gcloud functions deploy convertTextToAudio \
---region asia-east2 \
+--region us-central1 \
 --memory 256MB \
 --timeout 240s \
 --runtime nodejs8 \

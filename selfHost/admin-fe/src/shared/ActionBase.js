@@ -2,7 +2,7 @@ import axios from 'axios-settings'
 import { API_SUCCESS } from './constants'
 
 export default class ActionBase {
-  constructor (actionType) {
+  constructor(actionType) {
     this.actionType = actionType
   }
 
@@ -12,14 +12,14 @@ export default class ActionBase {
     }
   }
 
-  success = (payload) => {
+  success = payload => {
     return {
       type: this.actionType.success(),
       payload,
     }
   }
 
-  fail = (payload) => {
+  fail = payload => {
     return {
       type: this.actionType.fail(),
       payload,
@@ -42,15 +42,13 @@ export default class ActionBase {
     }
   }
 
-  makeAction = (
-    {
-      url,
-      method = 'get',
-      requestData = {},
-      onRequestSuccessCallback = undefined,
-      onRequestFailCallback = undefined,
-    },
-  ) => {
+  makeAction = ({
+    url,
+    method = 'get',
+    requestData = {},
+    onRequestSuccessCallback = undefined,
+    onRequestFailCallback = undefined,
+  }) => {
     return dispatch => {
       dispatch(this.start())
 
@@ -64,23 +62,25 @@ export default class ActionBase {
         requestOption['data'] = requestData
       }
 
-      axios(requestOption).then(res => {
-        const respData = res.data
-        const { code, data, msg } = respData
+      axios(requestOption)
+        .then(res => {
+          const respData = res.data
+          const { code, data, msg } = respData
 
-        if (onRequestSuccessCallback) {
-          onRequestSuccessCallback(dispatch, respData)
-        } else {
-          if (code === API_SUCCESS) {
-            dispatch(this.success({ data }))
+          if (onRequestSuccessCallback) {
+            onRequestSuccessCallback(dispatch, respData)
           } else {
-            dispatch(this.fail({ error: msg }))
+            if (code === API_SUCCESS) {
+              dispatch(this.success({ data }))
+            } else {
+              dispatch(this.fail({ error: msg }))
+            }
           }
-        }
-      }).catch((err) => {
-        dispatch(this.fail({ error: err.toString() }))
-        if (onRequestFailCallback) onRequestFailCallback(dispatch, err)
-      })
+        })
+        .catch(err => {
+          dispatch(this.fail({ error: err.toString() }))
+          if (onRequestFailCallback) onRequestFailCallback(dispatch, err)
+        })
     }
   }
 }

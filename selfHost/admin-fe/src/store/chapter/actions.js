@@ -7,7 +7,7 @@ const detailAction = new ActionBase(actionTypes.CHAPTER_DETAIL)
 
 export const resetListChapter = () => listAction.reset()
 
-export const getListChapter = (params) => {
+export const getListChapter = params => {
   return listAction.makeAction({
     url: '/api/chapter',
     method: 'get',
@@ -30,18 +30,18 @@ export const updateChapter = (id, params, callback) => {
         dispatch({
           type: actionTypes.LIST_CHAPTER.custom('update_items'),
           payload: {
-            items: [{ id, ...params }]
-          }
+            items: [{ id, ...params }],
+          },
         })
       } else {
         dispatch(detailAction.fail({ error: msg }))
       }
       if (callback) callback()
-    }
+    },
   })
 }
 
-export const convertAudioChapter = ({ id, bookID,  callback }) => {
+export const convertAudioChapter = ({ id, bookID, callback }) => {
   return detailAction.makeAction({
     url: `/api/convert-audio`,
     method: 'post',
@@ -54,12 +54,12 @@ export const convertAudioChapter = ({ id, bookID,  callback }) => {
         dispatch({
           type: actionTypes.LIST_CHAPTER.custom('update_items'),
           payload: {
-            items: [{ id, ...data }]
-          }
+            items: [{ id, ...data }],
+          },
         })
       }
       if (callback) callback()
-    }
+    },
   })
 }
 
@@ -75,13 +75,13 @@ export const getChapter = (id, callback) => {
         dispatch({
           type: actionTypes.LIST_CHAPTER.custom('update_items'),
           payload: {
-            items: [data]
-          }
+            items: [data],
+          },
         })
       } else {
         dispatch(detailAction.fail({ error: msg }))
       }
       if (callback) callback()
-    }
+    },
   })
 }

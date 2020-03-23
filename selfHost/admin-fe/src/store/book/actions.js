@@ -7,7 +7,7 @@ const detailAction = new ActionBase(actionTypes.BOOK_DETAIL)
 
 export const resetListBook = () => listAction.reset()
 
-export const getListBook = (params) => {
+export const getListBook = params => {
   return listAction.makeAction({
     url: '/api/book',
     method: 'get',
@@ -30,14 +30,14 @@ export const updateBook = (id, params, callback) => {
         dispatch({
           type: actionTypes.LIST_BOOK.custom('update_items'),
           payload: {
-            items: [{ id, ...params }]
-          }
+            items: [{ id, ...params }],
+          },
         })
       } else {
         dispatch(detailAction.fail({ error: msg }))
       }
       if (callback) callback()
-    }
+    },
   })
 }
 
@@ -53,13 +53,13 @@ export const getBook = (id, callback) => {
         dispatch({
           type: actionTypes.LIST_BOOK.custom('update_items'),
           payload: {
-            items: [data]
-          }
+            items: [data],
+          },
         })
       } else {
         dispatch(detailAction.fail({ error: msg }))
       }
       if (callback) callback()
-    }
+    },
   })
 }

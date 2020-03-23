@@ -15,23 +15,24 @@ const List = () => {
   const chapterListReducer = useSelector(state => state.chapter.list)
   const [loading, setLoading] = useState(false)
 
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const bookID = urlQuery.get('bookID')
 
   useEffect(() => {
     dispatch(getListChapter({ page, bookID }))
   }, [page])
 
-  function onTableChange (paginationChanged) {
+  function onTableChange(paginationChanged) {
     setPage(paginationChanged.current)
   }
 
-  function convertAudioForAllBook () {
+  function convertAudioForAllBook() {
     setLoading(true)
-    dispatch(convertAudioChapter({
+    dispatch(
+      convertAudioChapter({
         bookID,
-        callback: () => setLoading(false)
-      })
+        callback: () => setLoading(false),
+      }),
     )
   }
 
@@ -39,10 +40,7 @@ const List = () => {
     <div className={'chapters-of-book '}>
       <Title level={4}>Books</Title>
       <div className={'mass-action-on-all-data'}>
-        <Button
-          loading={loading}
-          onClick={convertAudioForAllBook}
-        >
+        <Button loading={loading} onClick={convertAudioForAllBook}>
           Convert audio of all chapter
         </Button>
       </div>

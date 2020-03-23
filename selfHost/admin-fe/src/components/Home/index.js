@@ -1,11 +1,6 @@
 import React from 'react'
-import CrawlNewBookTTVBtn from '../common/CrawlNewBookTTVBtn'
 
 const Home = () => {
-  return (
-    <>
-      <CrawlNewBookTTVBtn/>
-    </>
-  )
+  return <h2>Dashboard</h2>
 }
 export default Home

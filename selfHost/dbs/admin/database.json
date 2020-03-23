@@ -1,0 +1,11 @@
+{
+  "sql-file": true,
+  "dev": {
+    "driver": "sqlite3",
+    "filename": "./dataDir/admin.db"
+  },
+  "prod": {
+    "driver": "sqlite3",
+    "filename": "./dataDir/admin.db"
+  }
+}

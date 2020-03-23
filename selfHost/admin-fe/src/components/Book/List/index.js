@@ -6,7 +6,8 @@ import columns from './columns'
 import { ITEM_PER_PAGE } from '../../../shared/constants'
 import './style.scss'
 import { useDebounce } from '../../../shared/hooks'
-import { crawlAllBookDetailTTV } from '../../../store/crawl/actions'
+import { crawlAllBookDetail } from '../../../store/crawl/actions'
+import CrawlNewBookBtn from '../../common/CrawlNewBookBtn'
 
 const { Title } = Typography
 const { Search } = Input
@@ -14,7 +15,7 @@ const { Search } = Input
 const List = () => {
   const dispatch = useDispatch()
   const bookListReducer = useSelector(state => state.book.list)
-  const crawlAllBookDetailTTVReducer = useSelector(state => state.crawl.crawlAllBookDetailTTV)
+  const crawlAllBookDetailReducer = useSelector(state => state.crawl.crawlAllBookDetail)
 
   const [searchText, setSearchText] = useState('')
   const debouncedSearchText = useDebounce(searchText, 400)
@@ -26,7 +27,7 @@ const List = () => {
     dispatch(getListBook({ page, sorter, filter: { name: debouncedSearchText } }))
   }, [page, sorter, debouncedSearchText])
 
-  function onTableChange (pagination, filters, sorter) {
+  function onTableChange(pagination, filters, sorter) {
     setPage(pagination.current)
     setSorter({
       order: sorter.order,
@@ -38,10 +39,9 @@ const List = () => {
     <div className={'book-list'}>
       <Title level={4}>Books</Title>
       <div className={'mass-action-on-all-data'}>
-        <Button
-          loading={crawlAllBookDetailTTVReducer.loading}
-          onClick={() => dispatch(crawlAllBookDetailTTV())}
-        >
+        <CrawlNewBookBtn />
+
+        <Button loading={crawlAllBookDetailReducer.loading} onClick={() => dispatch(crawlAllBookDetail())}>
           Crawl all book info
         </Button>
       </div>
@@ -49,7 +49,7 @@ const List = () => {
         className={'search-box'}
         placeholder="Search by book name"
         onSearch={value => setSearchText(value)}
-        onChange={(e) => setSearchText(e.target.value)}
+        onChange={e => setSearchText(e.target.value)}
       />
       <Table
         bordered

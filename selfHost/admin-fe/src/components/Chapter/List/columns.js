@@ -25,29 +25,35 @@ export default [
     title: 'Text',
     dataIndex: 'text',
     key: 'text',
-    render: (text) => {
+    render: text => {
       return text.substring(0, 50) + ' ...'
-    }
+    },
   },
   {
     title: 'Audio',
     dataIndex: 'audio',
     key: 'audio',
-    render: (text) => {
-      return text && <a href={text} target={'_blank'}>Link</a>
-    }
+    render: text => {
+      return (
+        text && (
+          <a href={text} target={'_blank'}>
+            Link
+          </a>
+        )
+      )
+    },
   },
   {
     title: 'Updated at',
     dataIndex: 'updated_at',
     key: 'updated_at',
-    render: (text) => moment(text).format(ISO_DATE_TIME_FORMAT)
+    render: text => moment(text).format(ISO_DATE_TIME_FORMAT),
   },
   {
     title: 'Created at',
     dataIndex: 'created_at',
     key: 'created_at',
-    render: (text) => moment(text).format(ISO_DATE_TIME_FORMAT)
+    render: text => moment(text).format(ISO_DATE_TIME_FORMAT),
   },
   {
     title: 'Actions',
@@ -60,6 +66,6 @@ export default [
           <ShowContentBtn record={record} />
         </Button.Group>
       )
-    }
-  }
+    },
+  },
 ]

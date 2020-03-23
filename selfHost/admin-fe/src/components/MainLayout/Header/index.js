@@ -11,16 +11,14 @@ const Header = () => {
   const dispatch = useDispatch()
   const userInfo = useSelector(state => state.user.info.data)
 
-  function onLogout () {
+  function onLogout() {
     dispatch(logout())
   }
 
   const menu = (
     <Menu>
       <Menu.Item onClick={onLogout}>
-        <a href={'#'}>
-          Logout
-        </a>
+        <a href={'#'}>Logout</a>
       </Menu.Item>
     </Menu>
   )
@@ -29,7 +27,7 @@ const Header = () => {
     <HeaderAntd className="header">
       <Dropdown overlay={menu} className={'user'}>
         <a className="ant-dropdown-link" href="#">
-          {removeDomainInEmail(userInfo?.email)} <Icon type="down"/>
+          {removeDomainInEmail(userInfo?.email)} <Icon type="down" />
         </a>
       </Dropdown>
     </HeaderAntd>

@@ -9,23 +9,21 @@ const MarkPublicBtn = ({ record }) => {
 
   const onClick = () => {
     setLoading(true)
-    dispatch(updateBook(
-      record.id,
-      {
-        is_public: record.is_public ? 0 : 1
-      },
-      () => setLoading(false)
-      )
+    dispatch(
+      updateBook(
+        record.id,
+        {
+          is_public: record.is_public ? 0 : 1,
+        },
+        () => setLoading(false),
+      ),
     )
   }
 
   return (
     <>
-      <Button
-        onClick={onClick}
-        loading={loading}
-      >
-        { record.is_public ? 'Mark un-public' : 'Mark public' }
+      <Button onClick={onClick} loading={loading}>
+        {record.is_public ? 'Mark un-public' : 'Mark public'}
       </Button>
     </>
   )

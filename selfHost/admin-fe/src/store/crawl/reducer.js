@@ -1,28 +1,28 @@
 import ReducerBase from '../../shared/ReducerBase'
 import * as actionTypes from './actionTypes'
 
-const crawlNewBooksTTV = new ReducerBase(actionTypes.CRAWl_NEW_BOOKS_TTV)
-const getStatusCrawlNewBooksTTV = new ReducerBase(actionTypes.GET_STATUS_CRAWl_NEW_BOOK_TTV)
-const crawlBookTTV = new ReducerBase(actionTypes.CRAWl_BOOK_TTV)
-const crawlChapterTTV = new ReducerBase(actionTypes.CRAWl_CHAPTER_TTV)
-const crawlAllBookDetailTTV = new ReducerBase(actionTypes.CRAWl_ALL_BOOK_DETAIL_TTV)
+const crawlNewBooks = new ReducerBase(actionTypes.CRAWl_NEW_BOOKS)
+const getStatusCrawlNewBooks = new ReducerBase(actionTypes.GET_STATUS_CRAWl_NEW_BOOK)
+const crawlBook = new ReducerBase(actionTypes.CRAWl_BOOK)
+const crawlChapter = new ReducerBase(actionTypes.CRAWl_CHAPTER)
+const crawlAllBookDetail = new ReducerBase(actionTypes.CRAWl_ALL_BOOK_DETAIL)
 
 const initialState = {
-  crawlNewBooksTTV: crawlNewBooksTTV.initialState,
-  getStatusCrawlNewBooksTTV: getStatusCrawlNewBooksTTV.initialState,
-  crawlBookTTV: crawlBookTTV.initialState,
-  crawlChapterTTV: crawlChapterTTV.initialState,
-  crawlAllBookDetailTTV: crawlAllBookDetailTTV.initialState,
+  crawlNewBooks: crawlNewBooks.initialState,
+  getStatusCrawlNewBooks: getStatusCrawlNewBooks.initialState,
+  crawlBook: crawlBook.initialState,
+  crawlChapter: crawlChapter.initialState,
+  crawlAllBookDetail: crawlAllBookDetail.initialState,
 }
 
 const reducer = (state = initialState, action) => {
   return {
     ...state,
-    crawlNewBooksTTV: crawlNewBooksTTV.reducer(state.crawlNewBooksTTV, action),
-    getStatusCrawlNewBooksTTV: getStatusCrawlNewBooksTTV.reducer(state.getStatusCrawlNewBooksTTV, action),
-    crawlBookTTV: crawlBookTTV.reducer(state.crawlBookTTV, action),
-    crawlChapterTTV: crawlChapterTTV.reducer(state.crawlChapterTTV, action),
-    crawlAllBookDetailTTV: crawlAllBookDetailTTV.reducer(state.crawlAllBookDetailTTV, action),
+    crawlNewBooks: crawlNewBooks.reducer(state.crawlNewBooks, action),
+    getStatusCrawlNewBooks: getStatusCrawlNewBooks.reducer(state.getStatusCrawlNewBooks, action),
+    crawlBook: crawlBook.reducer(state.crawlBook, action),
+    crawlChapter: crawlChapter.reducer(state.crawlChapter, action),
+    crawlAllBookDetail: crawlAllBookDetail.reducer(state.crawlAllBookDetail, action),
   }
 }
 

@@ -1,5 +1,9 @@
 export const LOCALSTORAGE_PREFIX = 'my-audio-admin-fe'
 
+export const CRAWL_TYPE_NEW_BOOK = 'new_wuxiaworld_book'
+export const CRAWL_TYPE_BOOK = 'wuxiaworld_book'
+export const CRAWL_TYPE_CHAPTER = 'wuxiaworld_chapter'
+
 export const CRAWL_STATUS_CRAWLING = 'crawling'
 export const CRAWL_STATUS_COMPLETED = 'completed'
 
