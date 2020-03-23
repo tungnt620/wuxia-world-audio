@@ -1,12 +1,9 @@
 const { BOOK_AUDIO_GCP_BUCKET_NAME } = require("../constants");
 
 let fetch = require("node-fetch");
-const { AdminBookDB } = require("../dataSources/DB");
 const { getResponse } = require("./request");
-const Database = require("better-sqlite3");
 const { API_CODE_ERROR } = require("../constants");
-
-const bookDB = new AdminBookDB(new Database(process.env.CORE_DB_URL));
+const { bookDB } = require("../utils");
 
 async function convertAudioOfChapters(chapters) {
   for (const chapter of chapters) {

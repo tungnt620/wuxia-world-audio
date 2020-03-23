@@ -1,11 +1,6 @@
-const { AdminBookDB } = require("../dataSources/DB");
-const Database = require("better-sqlite3");
 const { REDIS_STREAM_KEY_CHAPTER } = require("../constants");
 const { LAST_ID_CHAPTER_STREAM_KEY } = require("../constants");
-const { redisClient } = require("../utils");
-
-const adminBookDB = new AdminBookDB(new Database(process.env.DB_URL));
-const bookDB = new AdminBookDB(new Database(process.env.CORE_DB_URL));
+const { redisClient, bookDB, adminBookDB } = require("../utils");
 
 let isProcessShutDown = false;
 module.exports.isProcessShutDown = isProcessShutDown;

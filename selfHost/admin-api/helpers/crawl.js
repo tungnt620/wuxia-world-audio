@@ -10,17 +10,12 @@ const {
   CRAWL_STATUS_COMPLETED,
   CRAWL_STATUS_CRAWLING
 } = require("../constants");
-const { AdminBookDB } = require("../dataSources/DB");
 const { getResponse } = require("./request");
-const Database = require("better-sqlite3");
 const { REDIS_STREAM_KEY_BOOK } = require("../constants");
 const { REDIS_STREAM_KEY_CHAPTER } = require("../constants");
 const { API_CODE_ERROR } = require("../constants");
 const { REDIS_STREAM_KEY_NEW_BOOKS } = require("../constants");
-const db = new Database(process.env.DB_URL);
-
-const adminBookDB = new AdminBookDB(db);
-const bookDB = new AdminBookDB(new Database(process.env.CORE_DB_URL));
+const { bookDB, adminBookDB } = require("../utils");
 
 function getCrawlJobIDKeyInDB(crawlType, params) {
   switch (crawlType) {

@@ -1,9 +1,6 @@
 const { convertAudioOfChapters } = require("../helpers/audio");
-const { redisClient } = require("../utils");
-const { AdminBookDB } = require("../dataSources/DB");
-const Database = require("better-sqlite3");
+const { redisClient, bookDB } = require("../utils");
 const { promisify } = require("util");
-const bookDB = new AdminBookDB(new Database(process.env.CORE_DB_URL));
 
 const redisGetAsync = promisify(redisClient.get).bind(redisClient);
 

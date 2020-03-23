@@ -1,36 +1,24 @@
-const { ApolloServer } = require('apollo-server')
-const typeDefs = require('./schema')
-const resolvers = require('./resolvers')
+const { getBooks } = require("./helpers");
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
-// Initial database
-const Database = require('better-sqlite3')
-const db = new Database(process.env.DB_URL)
+const app = express();
+const port = 4002;
 
-// set up any dataSources our resolvers need
-const MyAudio = require('./dataSources/myAudio')
-const myAudioDataSource = new MyAudio(db)
-const dataSources = () => ({
-  myAudio: myAudioDataSource,
-})
+const corsOptions = {
+  origin: ["http://localhost:3000", "audiocuatui.com"],
+  credentials: true
+};
+app.use(cors(corsOptions));
 
-// the function that sets up the global context for each resolver, using the req
-// we can make authorization here
-const context = async ({ req }) => {
-  return {}
-}
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
 
-// Set up Apollo Server
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  dataSources,
-  context,
-  engine: {
-    apiKey: process.env.ENGINE_API_KEY,
-    schemaTag: process.env.ENGINE_SCHEMA_TAG,
-  },
-})
+app.get("/api/book", async function(req, res) {
+  const resp = await getBooks(req.query);
+  await res.json(resp);
+});
 
-server.listen({ port: 4002 }).then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`)
-})
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));

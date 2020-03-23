@@ -1,5 +1,5 @@
 {
-  "name": "my-audio-api",
+  "name": "wuxia-world-api",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -8,13 +8,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.4.8",
     "better-sqlite3": "^5.4.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "graphql": "^14.2.1",
+    "express": "^4.17.1",
     "redis": "^2.8.0",
     "sitemap": "^5.0.0",
-    "sqlite3": "^4.0.6",
+    "slugify": "^1.4.0",
     "util": "^0.11.1"
   }
 }

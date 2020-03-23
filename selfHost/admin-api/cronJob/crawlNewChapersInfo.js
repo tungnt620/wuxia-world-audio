@@ -1,9 +1,6 @@
 const { crawl } = require("../helpers/crawl");
 const { CRAWL_TYPE_CHAPTER } = require("../constants");
-
-const { AdminBookDB } = require("../dataSources/DB");
-const Database = require("better-sqlite3");
-const bookDB = new AdminBookDB(new Database(process.env.CORE_DB_URL));
+const { bookDB } = require("../utils");
 
 const today = new Date();
 if (today.getMinutes() === 1) {

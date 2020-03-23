@@ -1,14 +1,8 @@
-const { crawl } = require("../helpers/crawl");
-const { CRAWL_TYPE_CHAPTER } = require("../constants");
-
-const { AdminBookDB } = require("../dataSources/DB");
 const { redisClient } = require("../utils");
-const Database = require("better-sqlite3");
 const { LAST_ID_BOOK_STREAM_KEY } = require("../constants");
 const { REDIS_STREAM_KEY_BOOK } = require("../constants");
 
-const adminBookDB = new AdminBookDB(new Database(process.env.DB_URL));
-const bookDB = new AdminBookDB(new Database(process.env.CORE_DB_URL));
+const { bookDB, adminBookDB } = require("../utils");
 
 let isProcessShutDown = false;
 module.exports.isProcessShutDown = isProcessShutDown;
