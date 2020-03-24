@@ -3,6 +3,7 @@ const {
   CRAWL_TYPE_CHAPTER,
   CRAWL_TYPE_NEW_BOOK
 } = require("../constants");
+const sleep = require("await-sleep");
 
 let fetch = require("node-fetch");
 const { URLSearchParams } = require("url");
@@ -141,6 +142,8 @@ async function crawlAllBook() {
           jobID
         );
       }
+
+      await sleep(100);
     }
 
     return getResponse();
