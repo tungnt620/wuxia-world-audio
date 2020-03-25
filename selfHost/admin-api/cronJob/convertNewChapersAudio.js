@@ -1,5 +1,5 @@
 const { convertAudioOfChapters } = require("../helpers/audio");
-const { redisClient, bookDB } = require("../utils");
+const { bookDB, redisClient } = require("../helpers/dataConnections");
 const { promisify } = require("util");
 
 const redisGetAsync = promisify(redisClient.get).bind(redisClient);

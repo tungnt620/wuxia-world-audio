@@ -1,6 +1,10 @@
 const { REDIS_STREAM_KEY_CHAPTER } = require("../constants");
 const { LAST_ID_CHAPTER_STREAM_KEY } = require("../constants");
-const { redisClient, bookDB, adminBookDB } = require("../utils");
+const {
+  bookDB,
+  adminBookDB,
+  redisClient
+} = require("../helpers/dataConnections");
 
 let isProcessShutDown = false;
 module.exports.isProcessShutDown = isProcessShutDown;

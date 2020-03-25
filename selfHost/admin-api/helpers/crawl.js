@@ -16,7 +16,7 @@ const { REDIS_STREAM_KEY_BOOK } = require("../constants");
 const { REDIS_STREAM_KEY_CHAPTER } = require("../constants");
 const { API_CODE_ERROR } = require("../constants");
 const { REDIS_STREAM_KEY_NEW_BOOKS } = require("../constants");
-const { bookDB, adminBookDB } = require("../utils");
+const { bookDB, adminBookDB } = require("../helpers/dataConnections");
 
 function getCrawlJobIDKeyInDB(crawlType, params) {
   switch (crawlType) {

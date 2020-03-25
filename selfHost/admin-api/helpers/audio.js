@@ -3,7 +3,7 @@ const { BOOK_AUDIO_GCP_BUCKET_NAME } = require("../constants");
 let fetch = require("node-fetch");
 const { getResponse } = require("./request");
 const { API_CODE_ERROR } = require("../constants");
-const { bookDB } = require("../utils");
+const { bookDB } = require("../helpers/dataConnections");
 
 async function convertAudioOfChapters(chapters) {
   for (const chapter of chapters) {

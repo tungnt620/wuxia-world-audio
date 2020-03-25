@@ -1,7 +1,7 @@
 const { getResponse } = require("./request");
 const { API_CODE_ERROR } = require("../constants");
 const { ITEM_PER_PAGE } = require("../constants");
-const { bookDB } = require("../utils");
+const { bookDB } = require("../helpers/dataConnections");
 
 async function getChapters({ page = 1, bookID }) {
   const offset = (page - 1) * ITEM_PER_PAGE;

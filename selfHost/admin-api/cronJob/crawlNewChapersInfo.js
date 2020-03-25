@@ -1,6 +1,6 @@
 const { crawl } = require("../helpers/crawl");
 const { CRAWL_TYPE_CHAPTER } = require("../constants");
-const { bookDB } = require("../utils");
+const { bookDB } = require("../helpers/dataConnections");
 const sleep = require("await-sleep");
 
 const today = new Date();

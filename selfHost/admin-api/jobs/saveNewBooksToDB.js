@@ -1,6 +1,10 @@
 const { REDIS_STREAM_KEY_NEW_BOOKS } = require("../constants");
 const { LAST_ID_NEW_BOOKS_STREAM_KEY } = require("../constants");
-const { redisClient, bookDB, adminBookDB } = require("../utils");
+const {
+  bookDB,
+  adminBookDB,
+  redisClient
+} = require("../helpers/dataConnections");
 
 let { isProcessShutDown } = require("./index");
 
