@@ -1,10 +1,12 @@
 const { LAST_ID_BOOK_STREAM_KEY } = require("../constants");
 const { REDIS_STREAM_KEY_BOOK } = require("../constants");
-const {
-  bookDB,
-  adminBookDB,
-  redisClient
-} = require("../helpers/dataConnections");
+const { bookDB, adminBookDB } = require("../helpers/dataConnections");
+const redis = require("redis");
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD
+});
 
 let isProcessShutDown = false;
 module.exports.isProcessShutDown = isProcessShutDown;
@@ -15,8 +17,10 @@ redisClient.on("error", function(error) {
 
 async function saveBookToDB() {
   let lastID = await adminBookDB.getValueFromKey(LAST_ID_BOOK_STREAM_KEY);
-  console.log("last id in stream is: ", lastID);
+  console.log(`last id in stream ${REDIS_STREAM_KEY_BOOK} is: `, lastID);
   if (!lastID) lastID = "$";
+
+  console.log(`Call redis stream with lastID: ${lastID}`);
 
   redisClient.send_command(
     "XREAD",
@@ -67,6 +71,8 @@ async function saveBookToDB() {
         } catch (err) {
           console.log(err);
         }
+
+        console.log(`isProcessShutDown ${isProcessShutDown}`);
 
         if (!isProcessShutDown) {
           await saveBookToDB();

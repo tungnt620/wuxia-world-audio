@@ -1,10 +1,12 @@
 const { REDIS_STREAM_KEY_NEW_BOOKS } = require("../constants");
 const { LAST_ID_NEW_BOOKS_STREAM_KEY } = require("../constants");
-const {
-  bookDB,
-  adminBookDB,
-  redisClient
-} = require("../helpers/dataConnections");
+const { bookDB, adminBookDB } = require("../helpers/dataConnections");
+const redis = require("redis");
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD
+});
 
 let { isProcessShutDown } = require("./index");
 

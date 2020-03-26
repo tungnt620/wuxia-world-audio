@@ -48,7 +48,6 @@ async function getStatusCrawl(crawlType, params) {
     let crawlStatus = CRAWL_STATUS_COMPLETED;
 
     console.log(lastJobID);
-    console.log(listJobs);
 
     if (
       [...listJobs["pending"], ...listJobs["running"]].some(
