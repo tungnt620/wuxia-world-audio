@@ -43,6 +43,10 @@ async function saveBookToDB() {
             ...newBookData
           } = bookData;
 
+          newBookData.source_total_chapter = newBookData.chapter_urls
+            ? JSON.parse(newBookData.chapter_urls).length
+            : 0;
+
           bookDB.updateTable("book", newBookData);
           const book = bookDB.getBookByID(newBookData.id);
 

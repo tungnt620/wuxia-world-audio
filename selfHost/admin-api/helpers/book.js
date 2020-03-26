@@ -18,12 +18,6 @@ async function getBooks({ page = 1, sorter = "{}", filter = "{}" }) {
     });
     const totalBook = bookDB.getTotalBooks();
 
-    books.forEach(book => {
-      book.source_total_chapter = book.chapter_urls
-        ? JSON.parse(book.chapter_urls).length
-        : 0;
-    });
-
     return getResponse({
       data: {
         items: books,
