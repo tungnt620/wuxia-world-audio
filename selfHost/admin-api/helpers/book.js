@@ -20,7 +20,7 @@ async function getBooks({ page = 1, sorter = "{}", filter = "{}" }) {
 
     books.forEach(book => {
       book.source_total_chapter = book.chapter_urls
-        ? book.chapter_urls.length
+        ? Object.parse(book.chapter_urls).length
         : 0;
     });
 
