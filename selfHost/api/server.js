@@ -1,4 +1,4 @@
-const { getBooks } = require("./helpers");
+const { getBooks, getChapter } = require("./helpers");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -18,6 +18,11 @@ app.use(bodyParser.raw());
 
 app.get("/api/book", async function(req, res) {
   const resp = await getBooks(req.query);
+  await res.json(resp);
+});
+
+app.get("/api/book/chapter", async function(req, res) {
+  const resp = await getChapter(req.query);
   await res.json(resp);
 });
 

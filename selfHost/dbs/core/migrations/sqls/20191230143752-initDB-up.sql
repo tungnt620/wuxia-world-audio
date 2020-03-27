@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS "book" (
     "chapter_urls"  text,
 	"is_public"     integer default 0,
 	"is_crawl_failed"   integer default 0,
+	"is_have_intro_chapter" integer default 0,
 	"created_at"	text,
 	"updated_at"	text,
 	UNIQUE(source, source_id)

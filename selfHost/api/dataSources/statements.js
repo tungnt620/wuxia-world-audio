@@ -75,6 +75,13 @@ const statements = {
                 )
                 order by order_no asc
   `,
+  get_chapter_by_book_id_and_order_no: `
+                select * from chapter where id in (
+                    select chapter_id from book_chapter 
+                    where book_id=$bookID
+                ) and order_no = $orderNo
+                order by order_no asc
+  `,
   get_total_chapter_by_book_id: `
                 select count(*) from book_chapter 
                 where book_id=$bookID

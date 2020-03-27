@@ -20,7 +20,7 @@ if (today.getHours() === 21 && today.getMinutes() === 1) {
         },
         {}
       );
-      const chapterUrls = JSON.parse(book.chapter_urls);
+      const chapterUrls = JSON.parse(book.chapter_urls) || [];
       let chaptersNeedCrawl = [];
       chapterUrls.forEach((chapterUrl, index) => {
         if (!orderNosChapterCrawledCorrect[index])

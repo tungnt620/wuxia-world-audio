@@ -16,6 +16,9 @@ async function getBooks({ page = 1, sorter = "{}", filter = "{}" }) {
       sortBy: sorter.field,
       sortOrder: sorter.order === "ascend" ? "asc" : "desc"
     });
+    books.forEach(book => {
+      delete book.chapter_urls;
+    });
     const totalBook = bookDB.getTotalBooks();
 
     return getResponse({

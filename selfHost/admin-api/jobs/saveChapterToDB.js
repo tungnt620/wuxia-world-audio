@@ -36,6 +36,22 @@ async function saveBookToDB() {
           const { book_id, ...chapterData } = chapterCrawlData;
           bookDB.deleteChapterByBookIDAndOrderNo(book_id, chapterData.order_no);
           const { lastInsertRowid } = bookDB.insertChapter(chapterData);
+
+          if (chapterData.order_no === 0) {
+            if (
+              chapterData.name.toLowerCase().includes("chapter 1") ||
+              chapterData.text
+                .substring(0, 100)
+                .toLowerCase()
+                .includes("chapter 1")
+            ) {
+              bookDB.updateTable("book", {
+                id: book_id,
+                is_have_intro_chapter: 1
+              });
+            }
+          }
+
           bookDB.insertIfNotExistBookChapter(book_id, lastInsertRowid);
 
           console.log("save data success");

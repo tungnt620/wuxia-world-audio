@@ -116,6 +116,13 @@ class BookDB extends BaseDB {
     return this._getList("get_chapters_by_book_id", { bookID, offset, limit });
   }
 
+  async getChapterByBookIDAndOrderNo(bookID, orderNo) {
+    return this._getOne("get_chapter_by_book_id_and_order_no", {
+      bookID,
+      orderNo
+    });
+  }
+
   async getTotalChapterByBookID(bookID) {
     return this._getOneWithPluck("get_total_chapter_by_book_id", { bookID });
   }
