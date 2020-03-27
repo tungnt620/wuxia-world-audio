@@ -9,7 +9,6 @@ if (today.getHours() === 21 && today.getMinutes() === 1) {
 
   (async function() {
     let books = bookDB.getBooks({ limit: 1000000 });
-    books = books.slice(0, 1);
     for (const book of books) {
       console.log("Check book ", book.name);
       const chaptersCrawledCorrect = bookDB.getChapterCrawledCorrect(book.id);
