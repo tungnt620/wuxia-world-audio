@@ -47,8 +47,6 @@ async function getStatusCrawl(crawlType, params) {
     const lastJobID = getJobID(crawlType, params);
     let crawlStatus = CRAWL_STATUS_COMPLETED;
 
-    console.log(lastJobID);
-
     if (
       [...listJobs["pending"], ...listJobs["running"]].some(
         job => job.id === lastJobID
