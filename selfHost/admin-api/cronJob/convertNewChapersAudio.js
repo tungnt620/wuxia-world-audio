@@ -5,7 +5,8 @@ const { promisify } = require("util");
 const redisGetAsync = promisify(redisClient.get).bind(redisClient);
 
 const today = new Date();
-if (today.getMinutes() === 1) {
+// TODO: stop convert audio
+if (today.getMinutes() === -1) {
   console.log("run cronjob convert audio for new chapters");
 
   (async function() {
