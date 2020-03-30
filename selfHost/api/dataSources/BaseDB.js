@@ -21,9 +21,15 @@ class BaseDB {
     this.context = config.context;
   }
 
-  _getList(statementName, params) {
+  _getList(statementNameOrStatement, params) {
     // return [] array if no data. if error raise Error exception
-    return this.db.prepare(this.statements[statementName]).all(params || {});
+    let statement;
+    if (this.statements[statementNameOrStatement]) {
+      statement = this.statements[statementNameOrStatement];
+    } else {
+      statement = statementNameOrStatement;
+    }
+    return this.db.prepare(statement).all(params || {});
   }
 
   _getOne(statementName, params) {

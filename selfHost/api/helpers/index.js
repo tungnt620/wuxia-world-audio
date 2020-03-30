@@ -9,13 +9,24 @@ exports.getBooks = async ({ offset = 0, limit = 1000 }) => {
       limit
     });
 
-    books.forEach(book => {
+    const booksChapterCount = await bookDB.getBooksChapterCount();
+    const bookChapterCountMap = booksChapterCount.reduce(
+      (map, bookChapterCount) => {
+        map[bookChapterCount.bookID] = bookChapterCount.numberChapter;
+        return map;
+      },
+      {}
+    );
+
+    const booksHaveAudio = books.filter(book => bookChapterCountMap[book.id]);
+    booksHaveAudio.forEach(book => {
       delete book.chapter_urls;
       delete book.desc;
+      book.number_audio = bookChapterCountMap[book.id];
     });
 
     return getResponse({
-      data: books
+      data: booksHaveAudio
     });
   } catch (err) {
     console.log(err);

@@ -32,6 +32,18 @@ class BookDB extends BaseDB {
     return this._getList(statementName, params);
   }
 
+  async getBooksChapterCount() {
+    return this._getList(
+      `
+      select bc.book_id as bookID, count(bc.chapter_id) as numberChapter
+        from book_chapter bc
+        inner join chapter c
+        on bc.chapter_id = c.id
+        where c.audio is not NULL
+        group by bc.book_id`
+    );
+  }
+
   async searchBook({ offset, limit, q }) {
     if (q) {
       let statementName = "search_book";
